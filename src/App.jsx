@@ -38,10 +38,10 @@ function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100">
-      <header className="fixed inset-x-0 top-0 z-30 border-b border-white/10 bg-black/85 backdrop-blur-[2px]">
+    <div className="bg-white text-zinc-900">
+      <header className="fixed inset-x-0 top-0 z-30 border-b border-black/10 bg-white/90 backdrop-blur-[2px]">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-          <a href="#top" className="text-sm font-light tracking-[0.14em] text-zinc-100">
+          <a href="#top" className="text-sm font-light tracking-[0.14em] text-zinc-900">
             PRIVY
           </a>
           <nav className="flex items-center gap-6 md:gap-8">
@@ -57,7 +57,6 @@ function App() {
       <main id="top" className="mx-auto w-full max-w-6xl px-6 pb-24 pt-28 md:px-10 md:pt-32">
         <RevealSection className="section-grid">
           <div>
-            <p className="kicker">Privacy Risk Assessment Platform</p>
             <h1 className="hero-title">
               Privacy Risk Assessment for AI Product Teams
             </h1>
@@ -86,8 +85,7 @@ function App() {
 
         <RevealSection id="project" className="section-spacing">
           <div className="section-header">
-            <p className="kicker">Project</p>
-            <h2 className="section-title">What Privy Is</h2>
+            <h2 className="section-title">What is Privy?</h2>
             <p className="body-copy max-w-3xl">
               Privy is a structured, research-oriented workflow for envisioning
               and mitigating privacy risks in AI product concepts.
@@ -135,18 +133,18 @@ function App() {
             <span>Insert Workflow Graphic</span>
             <div className="mt-8 hidden w-full grid-cols-5 gap-2 text-center text-xs tracking-[0.06em] text-zinc-400 md:grid">
               {workflowSteps.map((step) => (
-                <span key={step} className="border-t border-zinc-700/70 pt-3">
+                <span key={step} className="border-t border-zinc-300 pt-3">
                   {step}
                 </span>
               ))}
             </div>
           </div>
 
-          <ol className="mt-10 grid gap-5 border-t border-zinc-800 pt-8 md:grid-cols-2">
+          <ol className="mt-10 grid gap-5 border-t border-zinc-200 pt-8 md:grid-cols-2">
             {workflowSteps.map((step, index) => (
               <li key={step} className="flex gap-3">
-                <span className="mt-0.5 text-xs text-zinc-500">0{index + 1}</span>
-                <span className="text-sm text-zinc-300">{step}</span>
+                <span className="mt-0.5 text-xs text-zinc-400">0{index + 1}</span>
+                <span className="text-sm text-zinc-700">{step}</span>
               </li>
             ))}
           </ol>
@@ -172,10 +170,10 @@ function App() {
                 consumer-facing systems.
               </p>
               <div className="mt-10 border-t border-zinc-800 pt-6">
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-zinc-500">
                   Carnegie Mellon University
                 </p>
-                <p className="mt-1 text-sm text-zinc-400">SPUD Lab</p>
+                <p className="mt-1 text-sm text-zinc-500">SPUD Lab</p>
               </div>
             </div>
             <div className="placeholder-panel min-h-[320px] md:min-h-[380px]">
@@ -185,8 +183,8 @@ function App() {
         </RevealSection>
       </main>
 
-      <footer className="border-t border-zinc-800">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-xs tracking-[0.08em] text-zinc-500 md:flex-row md:items-center md:justify-between md:px-10">
+      <footer className="border-t border-zinc-200">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-xs tracking-[0.08em] text-zinc-400 md:flex-row md:items-center md:justify-between md:px-10">
           <p>Privy · Carnegie Mellon University</p>
           <div className="flex gap-5">
             <a href="https://arxiv.org/abs/2509.23525" target="_blank" rel="noreferrer">
