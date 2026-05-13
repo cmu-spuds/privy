@@ -20,12 +20,9 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-sans);
-  color: #f5f7fa;
-  background-color: #0b0f14;
-  background-image:
-    radial-gradient(circle at 12% 12%, rgba(129, 140, 248, 0.13), transparent 34%),
-    radial-gradient(circle at 88% 18%, rgba(14, 165, 233, 0.11), transparent 36%),
-    radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.1), transparent 34%);
+  color: #f1f1f1;
+  background-color: #050505;
+  background-image: linear-gradient(to bottom, #070707 0%, #050505 42%, #040404 100%);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -36,41 +33,56 @@ body {
 }
 
 ::selection {
-  background: rgba(125, 211, 252, 0.3);
-  color: #f8fbff;
+  background: rgba(250, 250, 250, 0.24);
+  color: #ffffff;
 }
 
 @layer components {
-  .section-shell {
-    @apply rounded-3xl border border-white/10 bg-white/[0.02];
+  .kicker {
+    @apply text-xs font-normal uppercase tracking-[0.14em] text-zinc-500;
   }
 
-  .section-kicker {
-    @apply text-xs font-medium uppercase tracking-[0.14em] text-zinc-400;
+  .hero-title {
+    @apply mt-5 max-w-2xl text-3xl font-medium leading-tight tracking-[-0.02em] text-zinc-100 sm:text-4xl md:text-5xl;
   }
 
   .section-title {
-    @apply text-balance text-3xl font-semibold tracking-[-0.025em] text-zinc-100 sm:text-4xl;
-  }
-}
-
-@layer utilities {
-  .grid-background {
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-    background-size: 34px 34px;
-    background-position: center;
+    @apply mt-4 text-balance text-3xl font-medium tracking-[-0.02em] text-zinc-100 sm:text-4xl;
   }
 
-  .noise-overlay {
-    pointer-events: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    opacity: 0.1;
-    mix-blend-mode: soft-light;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.25) 0.5px, transparent 0.7px);
-    background-size: 2.5px 2.5px;
+  .subheading {
+    @apply text-2xl font-medium tracking-[-0.015em] text-zinc-100;
+  }
+
+  .body-copy {
+    @apply text-base font-normal leading-relaxed text-zinc-300;
+  }
+
+  .section-spacing {
+    @apply mt-28 border-t border-zinc-800 pt-20 md:mt-36 md:pt-24;
+  }
+
+  .section-header {
+    @apply mx-auto flex max-w-4xl flex-col items-center text-center;
+  }
+
+  .section-grid {
+    @apply grid items-center gap-10 md:grid-cols-2 md:gap-16;
+  }
+
+  .placeholder-panel {
+    @apply flex items-center justify-center border border-zinc-700 bg-zinc-900/35 px-6 text-center;
+  }
+
+  .placeholder-panel span {
+    @apply text-xs font-normal uppercase tracking-[0.12em] text-zinc-500;
+  }
+
+  .mono-button {
+    @apply border border-zinc-600 px-4 py-2 text-xs uppercase tracking-[0.1em] text-zinc-200 transition-colors hover:border-zinc-400 hover:text-white;
+  }
+
+  .nav-tab {
+    @apply text-xs font-normal tracking-[0.08em] text-zinc-400 transition-colors hover:text-zinc-100;
   }
 }

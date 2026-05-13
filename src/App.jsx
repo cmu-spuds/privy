@@ -1,53 +1,6 @@
-import {
-  ArrowRight,
-  Bot,
-  ExternalLink,
-  FileText,
-  Lightbulb,
-  ListChecks,
-  Shield,
-  Users,
-} from 'lucide-react'
 import { motion } from 'framer-motion'
 
-const features = [
-  {
-    title: 'Risk Identification',
-    description:
-      'Surface privacy risks early by mapping consumer-facing AI interactions, data flows, and vulnerable touchpoints.',
-    icon: Shield,
-  },
-  {
-    title: 'Mitigation Suggestions',
-    description:
-      'Generate practical, context-aware mitigation options that teams can evaluate and prioritize.',
-    icon: Lightbulb,
-  },
-  {
-    title: 'AI-Assisted Assessments',
-    description:
-      'Leverage LLM guidance to expand threat imagination while keeping experts in-the-loop.',
-    icon: Bot,
-  },
-  {
-    title: 'Structured Privacy Workflows',
-    description:
-      'Move through a repeatable process that supports privacy-by-design across product development.',
-    icon: ListChecks,
-  },
-  {
-    title: 'Shareable Reports',
-    description:
-      'Create concise, citation-ready outputs for product, legal, and policy stakeholders.',
-    icon: FileText,
-  },
-  {
-    title: 'Human-AI Collaboration',
-    description:
-      'Combine practitioner judgment with model assistance to improve rigor without sacrificing speed.',
-    icon: Users,
-  },
-]
+const navigation = ['Project', 'How It Works', 'About Us']
 
 const workflowSteps = [
   'Product Idea',
@@ -58,276 +11,189 @@ const workflowSteps = [
 ]
 
 const reveal = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.45, ease: 'easeOut' },
   },
 }
 
-function Reveal({ children, className = '' }) {
+function RevealSection({ children, className = '', id }) {
   return (
-    <motion.div
+    <motion.section
+      id={id}
       className={className}
       variants={reveal}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.2 }}
     >
       {children}
-    </motion.div>
+    </motion.section>
   )
 }
 
 function App() {
-  return (
-    <div className="relative overflow-x-clip">
-      <div className="noise-overlay" aria-hidden="true" />
+  const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
 
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 pb-6 pt-8 md:px-10">
-        <p className="text-sm font-medium tracking-[0.16em] text-zinc-200/85">
-          PRIVY
-        </p>
-        <a
-          href="#research"
-          className="rounded-full border border-white/20 px-4 py-2 text-xs font-medium tracking-[0.08em] text-zinc-200/85 transition hover:border-cyan-300/45 hover:text-cyan-100"
-        >
-          BASED ON RESEARCH
-        </a>
+  return (
+    <div className="min-h-screen bg-[#050505] text-zinc-100">
+      <header className="fixed inset-x-0 top-0 z-30 border-b border-white/10 bg-black/85 backdrop-blur-[2px]">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
+          <a href="#top" className="text-sm font-light tracking-[0.14em] text-zinc-100">
+            PRIVY
+          </a>
+          <nav className="flex items-center gap-6 md:gap-8">
+            {navigation.map((item) => (
+              <a key={item} href={navHref(item)} className="nav-tab">
+                {item}
+              </a>
+            ))}
+          </nav>
+        </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 pb-20 md:gap-24 md:px-10">
-        <section id="top" className="section-shell grid-background relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(129,140,248,0.24),transparent_38%),radial-gradient(circle_at_82%_24%,rgba(45,212,191,0.2),transparent_34%),radial-gradient(circle_at_58%_80%,rgba(168,85,247,0.2),transparent_36%)]"
-            aria-hidden="true"
-          />
-          <div className="relative z-10 grid gap-10 px-8 py-14 md:grid-cols-[1.15fr_0.85fr] md:items-center md:px-12 md:py-20">
-            <Reveal>
-              <p className="mb-5 inline-flex rounded-full border border-white/15 px-3 py-1 text-xs font-medium tracking-[0.08em] text-zinc-300/85">
-                AI-POWERED PRIVACY RISK ASSESSMENT
-              </p>
-              <h1 className="text-balance text-4xl font-bold leading-tight tracking-[-0.03em] text-zinc-50 sm:text-5xl md:text-6xl">
-                Privacy Risk Assessment for AI Product Teams
-              </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-zinc-300/80 md:text-lg">
-                Privy helps teams identify, assess, and mitigate AI privacy
-                risks before deployment.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <a
-                  href="https://arxiv.org/abs/2509.23525"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-white"
-                >
-                  Read Paper
-                  <ExternalLink size={16} />
-                </a>
-                <a
-                  href="#workflow"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-zinc-100 transition hover:border-cyan-300/45 hover:text-cyan-100"
-                >
-                  View Demo
-                  <ArrowRight size={16} />
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal className="relative">
-              <motion.div
-                whileHover={{ y: -4, scale: 1.01 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="rounded-3xl border border-white/15 bg-[#0f1622]/95 p-6 shadow-[0_10px_80px_-45px_rgba(34,211,238,0.6)]"
-              >
-                <p className="text-xs font-medium tracking-[0.09em] text-zinc-300/80">
-                  PRIVACY ASSESSMENT DASHBOARD
-                </p>
-                <div className="mt-6 space-y-3">
-                  {[
-                    ['Risk vectors identified', '12'],
-                    ['Mitigation plans drafted', '8'],
-                    ['Assessment confidence', 'High'],
-                  ].map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
-                    >
-                      <span className="text-sm text-zinc-300/85">{label}</span>
-                      <span className="text-sm font-semibold text-zinc-100">
-                        {value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-4 py-3 text-sm text-cyan-100/90">
-                  Suggested action: tighten data retention in conversational
-                  logs before pilot launch.
-                </div>
-              </motion.div>
-            </Reveal>
-          </div>
-        </section>
-
-        <Reveal id="about" className="space-y-6">
-          <p className="section-kicker">About</p>
-          <h2 className="section-title max-w-3xl">
-            AI products create novel privacy risks, but most teams lack
-            structured workflows for identifying and mitigating them.
-          </h2>
-          <p className="max-w-3xl text-pretty text-base leading-relaxed text-zinc-300/80 md:text-lg">
-            Privy guides practitioners through structured privacy impact
-            assessments powered by AI assistance. It supports practical,
-            evidence-oriented decision-making while preserving human oversight.
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              'Research-backed assessment scaffolds',
-              'Clear checkpoints for cross-functional teams',
-              'Actionable outputs for design and governance',
-            ].map((item) => (
-              <div
-                key={item}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm leading-relaxed text-zinc-200/85"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal id="features" className="space-y-7">
-          <div className="space-y-3">
-            <p className="section-kicker">Features</p>
-            <h2 className="section-title max-w-3xl">
-              Built for privacy-sensitive AI product development workflows.
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => {
-              const Icon = feature.icon
-              return (
-                <motion.article
-                  key={feature.title}
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.25, ease: 'easeOut' }}
-                  className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-cyan-300/30 hover:shadow-[0_16px_60px_-44px_rgba(103,232,249,0.8)]"
-                >
-                  <div className="mb-4 inline-flex rounded-lg border border-white/15 bg-white/[0.03] p-2.5 text-cyan-100/85 transition group-hover:border-cyan-300/45">
-                    <Icon size={18} />
-                  </div>
-                  <h3 className="text-base font-semibold text-zinc-100">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-300/80">
-                    {feature.description}
-                  </p>
-                </motion.article>
-              )
-            })}
-          </div>
-        </Reveal>
-
-        <Reveal id="research" className="space-y-6">
-          <p className="section-kicker">Research</p>
-          <h2 className="section-title max-w-3xl">
-            Based on peer-reviewed research in privacy risk assessment for
-            consumer-facing AI systems.
-          </h2>
-          <div className="rounded-2xl border border-white/12 bg-white/[0.03] p-6 md:p-7">
-            <p className="text-sm leading-relaxed text-zinc-300/85 md:text-base">
-              <span className="font-semibold text-zinc-100">Privy:</span>{' '}
-              Envisioning and Mitigating Privacy Risks for Consumer-facing AI
-              Product Concepts
+      <main id="top" className="mx-auto w-full max-w-6xl px-6 pb-24 pt-28 md:px-10 md:pt-32">
+        <RevealSection className="section-grid">
+          <div>
+            <p className="kicker">Privacy Risk Assessment Platform</p>
+            <h1 className="hero-title">
+              Privacy Risk Assessment for AI Product Teams
+            </h1>
+            <p className="body-copy mt-6 max-w-xl">
+              Privy helps teams identify, assess, and mitigate privacy risks in
+              consumer-facing AI products before deployment.
             </p>
-            <p className="mt-2 text-xs tracking-wide text-zinc-400/85">
-              Citation-style summary with links to the preprint and full paper.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="https://arxiv.org/abs/2509.23525"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm text-zinc-100 transition hover:border-cyan-300/40 hover:text-cyan-100"
+                className="mono-button"
               >
-                arXiv <ExternalLink size={15} />
+                Read Paper
               </a>
-              <a
-                href="https://arxiv.org/pdf/2509.23525"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm text-zinc-100 transition hover:border-cyan-300/40 hover:text-cyan-100"
-              >
-                Paper PDF <ExternalLink size={15} />
+              <a href="#how-it-works" className="mono-button">
+                View Demo
               </a>
             </div>
           </div>
-        </Reveal>
-
-        <Reveal id="workflow" className="space-y-7">
-          <div className="space-y-3">
-            <p className="section-kicker">Workflow</p>
-            <h2 className="section-title max-w-3xl">
-              A structured path from concept exploration to actionable privacy
-              recommendations.
-            </h2>
+          <div className="placeholder-panel min-h-[330px] md:min-h-[420px]">
+            <span>Insert Demo Screenshot</span>
           </div>
-          <div className="overflow-hidden rounded-2xl border border-white/12 bg-white/[0.02] p-5 md:p-6">
-            <div className="grid gap-4 lg:grid-cols-[repeat(5,minmax(0,1fr))]">
-              {workflowSteps.map((step, index) => (
-                <div key={step} className="relative flex items-center gap-3">
-                  <div className="relative flex min-h-20 flex-1 items-center rounded-xl border border-white/12 bg-white/[0.03] px-4 py-3">
-                    <span className="text-sm font-medium text-zinc-100">
-                      {step}
-                    </span>
-                  </div>
-                  {index < workflowSteps.length - 1 && (
-                    <motion.div
-                      aria-hidden="true"
-                      className="hidden h-px w-8 bg-gradient-to-r from-cyan-300/60 to-indigo-300/20 lg:block"
-                      animate={{ opacity: [0.35, 1, 0.35] }}
-                      transition={{
-                        duration: 2.8,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: index * 0.2,
-                      }}
-                    />
-                  )}
-                </div>
+        </RevealSection>
+
+        <RevealSection id="project" className="section-spacing">
+          <div className="section-header">
+            <p className="kicker">Project</p>
+            <h2 className="section-title">What Privy Is</h2>
+            <p className="body-copy max-w-3xl">
+              Privy is a structured, research-oriented workflow for envisioning
+              and mitigating privacy risks in AI product concepts.
+            </p>
+          </div>
+
+          <div className="mt-16 space-y-20 md:space-y-24">
+            <article className="section-grid">
+              <div className="placeholder-panel min-h-[300px] md:min-h-[360px]">
+                <span>Insert Research Figure</span>
+              </div>
+              <div>
+                <h3 className="subheading">Structured problem framing</h3>
+                <p className="body-copy mt-4">
+                  Teams begin by articulating the product concept, user context,
+                  and AI capabilities. Privy transforms this early description
+                  into a format that supports rigorous privacy inquiry.
+                </p>
+              </div>
+            </article>
+
+            <article className="section-grid">
+              <div className="order-2 md:order-1">
+                <h3 className="subheading">Assessment with human oversight</h3>
+                <p className="body-copy mt-4">
+                  Privy combines LLM-generated prompts with practitioner
+                  judgment, helping teams discover non-obvious risks while
+                  preserving accountability in final decisions.
+                </p>
+              </div>
+              <div className="placeholder-panel order-1 min-h-[300px] md:order-2 md:min-h-[360px]">
+                <span>Insert Assessment Interface</span>
+              </div>
+            </article>
+          </div>
+        </RevealSection>
+
+        <RevealSection id="how-it-works" className="section-spacing">
+          <div className="section-header">
+            <p className="kicker">How It Works</p>
+            <h2 className="section-title">Step-by-step workflow</h2>
+          </div>
+
+          <div className="placeholder-panel mt-14 min-h-[190px] px-5">
+            <span>Insert Workflow Graphic</span>
+            <div className="mt-8 hidden w-full grid-cols-5 gap-2 text-center text-xs tracking-[0.06em] text-zinc-400 md:grid">
+              {workflowSteps.map((step) => (
+                <span key={step} className="border-t border-zinc-700/70 pt-3">
+                  {step}
+                </span>
               ))}
             </div>
           </div>
-        </Reveal>
+
+          <ol className="mt-10 grid gap-5 border-t border-zinc-800 pt-8 md:grid-cols-2">
+            {workflowSteps.map((step, index) => (
+              <li key={step} className="flex gap-3">
+                <span className="mt-0.5 text-xs text-zinc-500">0{index + 1}</span>
+                <span className="text-sm text-zinc-300">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </RevealSection>
+
+        <RevealSection id="about-us" className="section-spacing">
+          <div className="section-header">
+            <p className="kicker">About Us</p>
+            <h2 className="section-title">Research team and lab context</h2>
+            <p className="body-copy max-w-3xl">
+              Privy is presented as an HCI/privacy research project aligned with
+              Carnegie Mellon University and SPUD Lab style communication:
+              clear, evidence-based, and practitioner-facing.
+            </p>
+          </div>
+
+          <div className="section-grid mt-14">
+            <div>
+              <h3 className="subheading">Academic grounding</h3>
+              <p className="body-copy mt-4">
+                The project synthesizes empirical findings from AI practitioner
+                workflows with actionable privacy design practices for
+                consumer-facing systems.
+              </p>
+              <div className="mt-10 border-t border-zinc-800 pt-6">
+                <p className="text-sm text-zinc-400">
+                  Carnegie Mellon University
+                </p>
+                <p className="mt-1 text-sm text-zinc-400">SPUD Lab</p>
+              </div>
+            </div>
+            <div className="placeholder-panel min-h-[320px] md:min-h-[380px]">
+              <span>Insert Team / Lab Photo</span>
+            </div>
+          </div>
+        </RevealSection>
       </main>
 
-      <footer className="border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-6 py-8 text-sm text-zinc-300/80 md:flex-row md:items-center md:justify-between md:px-10">
-          <p>
-            <span className="font-semibold text-zinc-100">Privy</span> · Carnegie
-            Mellon University
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="https://arxiv.org/abs/2509.23525"
-              target="_blank"
-              rel="noreferrer"
-              className="transition hover:text-cyan-100"
-            >
+      <footer className="border-t border-zinc-800">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-xs tracking-[0.08em] text-zinc-500 md:flex-row md:items-center md:justify-between md:px-10">
+          <p>Privy · Carnegie Mellon University</p>
+          <div className="flex gap-5">
+            <a href="https://arxiv.org/abs/2509.23525" target="_blank" rel="noreferrer">
               Paper
             </a>
-            <a href="#workflow" className="transition hover:text-cyan-100">
-              Demo
-            </a>
-            <a
-              href="https://github.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="transition hover:text-cyan-100"
-            >
-              GitHub
-            </a>
+            <a href="#how-it-works">Demo</a>
+            <a href="#about-us">About</a>
           </div>
         </div>
       </footer>
