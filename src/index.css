@@ -68,6 +68,6 @@ body {
     @apply border border-zinc-400 px-4 py-2 text-xs uppercase tracking-[0.1em] text-zinc-700 transition-colors hover:border-zinc-700 hover:text-zinc-900;
   }
   .nav-tab {
-    @apply text-xs font-normal tracking-[0.08em] text-zinc-500 transition-colors hover:text-zinc-900;
+    @apply text-sm font-normal tracking-[0.08em] text-zinc-500 transition-colors hover:text-zinc-900;
   }
 }

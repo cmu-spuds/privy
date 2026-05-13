@@ -7,7 +7,7 @@ const workflowSteps = [
   { num: '2', label: 'Rank by Priority', desc: 'Rank the privacy risks in priority order.' },
   { num: '3', label: 'Create Mitigation Plan', desc: 'Brainstorm a mitigation strategy for the identified risks.' },
   { num: '4', label: 'Generate Summary', desc: 'Get structured summary of the ranked privacy risks and their mitigation strategies.' },
-  { num: '5', label: 'Export Report', desc: 'Export a structured report to document decisions and share with stakeholders.' },
+  { num: '5', label: 'Export Report', desc: 'Export a structured report to document decisions and share with others.' },
 ]
 
 const reveal = {
@@ -42,13 +42,13 @@ function App() {
 
       {/* NAV */}
       <header className="fixed inset-x-0 top-0 z-30 border-b border-black/10 bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-          <a href="#top" className="text-sm font-semibold tracking-[0.16em] text-zinc-900">
-            PRIVY
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10">
+          <a href="#top">
+            <img src="/privy_logo.png" alt="Privy" className="h-10 w-auto" />
           </a>
           <nav className="flex items-center gap-6 md:gap-8">
             {navigation.map((item) => (
-              <a key={item} href={navHref(item)} className="nav-tab">
+              <a key={item} href={navHref(item)} className="nav-tab text-sm">
                 {item}
               </a>
             ))}
@@ -66,7 +66,7 @@ function App() {
           <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
             <div>
               <h1 className="hero-title">
-                Privacy Risk Assessment for AI Product Teams
+                AI Privacy Risk Assistant
               </h1>
               <p className="body-copy mt-6 max-w-lg">
                 Privy helps teams identify, assess, and mitigate privacy risks
@@ -103,7 +103,7 @@ function App() {
             <ol className="divide-y divide-zinc-200 border-t border-zinc-200">
               {workflowSteps.map((step) => (
                 <li key={step.num} className="grid gap-4 py-8 md:grid-cols-[80px_1fr_2fr] md:gap-10 md:py-10">
-                  <span className="text-xs font-normal tracking-[0.14em] text-zinc-400">{step.num}</span>
+                  <span className="self-start text-3xl font-semibold leading-none tracking-tight text-zinc-300">{step.num}</span>
                   <p className="subheading self-start">{step.label}</p>
                   <p className="body-copy">{step.desc}</p>
                 </li>
@@ -122,20 +122,23 @@ function App() {
               <div>
                 <p className="kicker mb-3">Research</p>
                 <h2 className="section-title">The research this tool is built on</h2>
+                <div className="placeholder-panel mt-8 min-h-[200px]">
+                  <span>Insert Research Figure</span>
+                </div>
               </div>
               <div>
                 <p className="body-copy">
-                  Privy grew out of an empirical study of how AI product teams
-                  currently navigate privacy decisions. We interviewed
-                  practitioners across industry and found that privacy risks are
-                  often identified too late — or not at all — due to a lack of
-                  structured tooling at the ideation stage.
+                  Privy grew out of a research study of how AI product teams navigate privacy decisions.
+                  Through a formative study with AI practitioners, we found that most product teams lack
+                  the privacy expertise — and the structured tools — to proactively identify the risks
+                  their AI products may create or worsen.
                 </p>
                 <p className="body-copy mt-5">
-                  Our paper formalizes a taxonomy of AI-specific privacy risks
-                  and proposes a human-in-the-loop workflow that keeps
-                  practitioners accountable while leveraging LLM-generated
-                  prompts to surface blind spots.
+                  Privy was built to close this gap: it guides practitioners through a structured privacy
+                  impact assessment, using LLM-generated suggestions to surface blind spots while keeping
+                  practitioners in control of final decisions. In an evaluation with 24 practitioners
+                  reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant
+                  risks and propose effective mitigation strategies.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-3">
                   <a
@@ -148,10 +151,6 @@ function App() {
                   </a>
                 </div>
               </div>
-            </div>
-
-            <div className="placeholder-panel mt-16 min-h-[240px]">
-              <span>Insert Research Figure</span>
             </div>
           </div>
         </RevealSection>
@@ -176,13 +175,10 @@ function App() {
                 <p className="body-copy text-zinc-400">
                   We are a research group focused on human-centered approaches
                   to privacy and AI. Privy is part of a broader effort to give
-                  practitioners the tools they need to build responsibly —
-                  without sacrificing speed or creativity.
+                  practitioners the tools they need to build responsibly.
                 </p>
                 <p className="body-copy mt-5 text-zinc-400">
-                  Our work is grounded in empirical methods and designed to
-                  translate directly into practice. We collaborate with
-                  industry partners and academic institutions to study how
+                  We collaborate with industry partners and academic institutions to study how
                   privacy decisions are made and how they can be improved.
                 </p>
                 <div className="mt-10 border-t border-zinc-800 pt-6">
@@ -190,12 +186,6 @@ function App() {
                   <p className="mt-1 text-sm tracking-wide text-zinc-500">SPUD Lab</p>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-16 flex min-h-[280px] items-center justify-center border border-zinc-800 px-6">
-              <span className="text-xs font-normal uppercase tracking-[0.12em] text-zinc-600">
-                Insert Team / Lab Photo
-              </span>
             </div>
           </motion.div>
         </section>
