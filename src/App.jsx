@@ -61,9 +61,9 @@ function App() {
         {/* HERO / PROJECT */}
         <RevealSection
           id="project"
-          className="mx-auto w-full max-w-6xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
+          className="mx-auto w-full max-w-7xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
         >
-          <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
+          <div className="grid items-center gap-12 md:grid-cols-[0.75fr_1.45fr] md:gap-14">
             <div>
               <h1 className="hero-title">
                 AI Privacy Risk Assistant
@@ -83,9 +83,13 @@ function App() {
                 </a>
               </div>
             </div>
-            <div className="placeholder-panel min-h-[340px] md:min-h-[440px]">
-              <span>Insert nice photo</span>
-            </div>
+            <figure className="overflow-hidden border border-zinc-200 bg-white shadow-sm">
+              <img
+                src="/privyScreenshot.png"
+                alt="Privy privacy risk assistant workflow interface"
+                className="w-full object-contain"
+              />
+            </figure>
           </div>
         </RevealSection>
 
@@ -122,9 +126,13 @@ function App() {
               <div>
                 <p className="kicker mb-3">Research</p>
                 <h2 className="section-title">The research this tool is built on</h2>
-                <div className="placeholder-panel mt-8 min-h-[200px]">
-                  <span>Insert Research Figure</span>
-                </div>
+                <figure className="mt-8 overflow-hidden border border-zinc-200 bg-white shadow-sm">
+                  <img
+                    src="/privyResearchScreenshot.png"
+                    alt="Privy research privacy risk highlight summary"
+                    className="w-full object-contain"
+                  />
+                </figure>
               </div>
               <div>
                 <p className="body-copy">
