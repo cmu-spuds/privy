@@ -73,15 +73,6 @@ body {
 
   .how-it-works-layout {
     @apply grid gap-8 md:grid-cols-[2fr_3fr] md:items-start;
-    min-height: 44rem;
-  }
-
-  .step-list-column {
-    @apply min-h-full;
-  }
-
-  .step-list {
-    @apply flex min-h-full w-full flex-col gap-3;
   }
 
   .step-card {
@@ -139,14 +130,15 @@ body {
   }
 
   .laptop-shell {
-    @apply relative mx-auto w-full max-w-[760px];
+    @apply relative mx-auto w-full max-w-[860px];
   }
 
   .laptop-screen-window {
     @apply absolute z-10;
-    left: 14%;
-    top: 12%;
-    width: 71%;
+    left: 50%;
+    top: 11.5%;
+    width: 72%;
+    transform: translateX(-50%);
     aspect-ratio: 4 / 3;
   }
 
@@ -163,11 +155,11 @@ body {
   }
 
   .laptop-image-stage {
-    @apply h-full min-h-0 border-none bg-zinc-900 rounded-sm;
+    @apply flex h-full min-h-0 items-center justify-center overflow-hidden rounded-sm border-none bg-zinc-900;
   }
 
   .screen-image {
-    @apply absolute inset-0 h-full w-full object-cover transition-all duration-300 ease-out;
+    @apply absolute inset-0 h-full w-full object-cover object-center transition-all duration-300 ease-out;
   }
 
   .institution-logo {
@@ -176,11 +168,5 @@ body {
 
   .split-section-layout {
     @apply grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:items-center md:gap-16;
-  }
-}
-
-@media (max-width: 767px) {
-  .how-it-works-layout {
-    min-height: 0;
   }
 }
