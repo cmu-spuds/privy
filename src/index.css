@@ -73,6 +73,15 @@ body {
 
   .how-it-works-layout {
     @apply grid gap-8 md:grid-cols-[2fr_3fr] md:items-start;
+    min-height: 44rem;
+  }
+
+  .step-list-column {
+    @apply min-h-full;
+  }
+
+  .step-list {
+    @apply flex min-h-full w-full flex-col gap-3;
   }
 
   .step-card {
@@ -111,16 +120,14 @@ body {
     transform: rotate(180deg);
   }
 
-  .step-details {
-    @apply max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-[250ms] ease-out;
-  }
-
-  .step-details-open {
-    @apply mt-2 max-h-40 opacity-100;
-  }
-
   .step-description {
-    @apply block min-h-0 overflow-hidden text-sm leading-relaxed text-zinc-600;
+    @apply block max-h-0 min-h-0 overflow-hidden text-sm leading-relaxed text-zinc-600 opacity-0 transition-[max-height,opacity,margin] duration-[250ms] ease-out;
+    margin-top: 0;
+  }
+
+  .step-description-open {
+    @apply max-h-40 opacity-100;
+    margin-top: 0.5rem;
   }
 
   .preview-column {
@@ -165,5 +172,15 @@ body {
 
   .institution-logo {
     @apply h-12 w-12 rounded-full border border-zinc-300 bg-white object-contain p-1.5;
+  }
+
+  .split-section-layout {
+    @apply grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:items-center md:gap-16;
+  }
+}
+
+@media (max-width: 767px) {
+  .how-it-works-layout {
+    min-height: 0;
   }
 }
