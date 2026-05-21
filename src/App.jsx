@@ -209,8 +209,8 @@ function App() {
           id="how-it-works"
           className="border-t border-zinc-200 bg-zinc-50"
         >
-          <div className="mx-auto w-full max-w-6xl px-6 py-24 md:px-10 md:py-32">
-            <div className="mb-16">
+          <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-20">
+            <div className="mb-8">
               <p className="kicker mb-3">How It Works</p>
               <h2 className="section-title">A five-step workflow</h2>
             </div>
@@ -234,7 +234,7 @@ function App() {
                         className={`step-card ${isActive ? 'step-card-active' : ''}`}
                       >
                         <span className="step-card-header">
-                          <span className="step-number">{String(step.step).padStart(2, '0')}</span>
+                          <span className="step-number">{step.step}</span>
                           <span className="step-title">{step.title}</span>
                           <span
                             aria-hidden="true"
@@ -362,7 +362,7 @@ function App() {
                   Privy grew out of a research study of how AI product teams navigate privacy decisions. Through a formative study with AI practitioners, we found that most product teams lack the privacy expertise—and the structured tools—to proactively identify the risks their AI products may create or worsen.
                 </p>
                 <p className="body-copy mt-5">
-                  Privy was built to close this gap. It guides practitioners through a structured privacy impact assessment, using LLM-generated suggestions to surface blind spots while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
+                  Privy was built to close this gap. It guides practitioners through a structured privacy assessment, using LLM-generated suggestions to surface blind spots while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-3">
                   <a
