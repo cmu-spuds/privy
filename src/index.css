@@ -76,23 +76,45 @@ body {
   }
 
   .step-card {
-    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white p-5 text-left transition-all duration-300 ease-out hover:border-zinc-300 hover:bg-zinc-50;
+    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white px-4 py-3 text-left transition-all duration-300 ease-out hover:border-zinc-300;
   }
 
   .step-card-active {
-    @apply -translate-y-0.5 border-zinc-300 border-l-zinc-900 bg-zinc-50 shadow-sm;
+    @apply border-zinc-300 border-l-zinc-900 bg-zinc-50 shadow-sm;
+  }
+
+  .step-card-header {
+    @apply grid grid-cols-[auto_1fr_auto] items-center gap-3;
   }
 
   .step-number {
-    @apply mb-2 block text-xs font-medium tracking-[0.08em] text-zinc-400;
+    @apply block text-[2rem] leading-none font-medium tracking-[-0.02em] text-zinc-700;
   }
 
   .step-title {
-    @apply block text-base font-medium tracking-[-0.01em] text-zinc-900;
+    @apply block text-sm font-medium tracking-[-0.01em] text-zinc-900;
+  }
+
+  .step-chevron {
+    @apply text-xs text-zinc-500 transition-transform duration-[250ms] ease-out;
+  }
+
+  .step-chevron-open {
+    transform: rotate(180deg);
+  }
+
+  .step-details {
+    @apply grid overflow-hidden transition-all duration-[250ms] ease-out opacity-0;
+    grid-template-rows: 0fr;
+  }
+
+  .step-details-open {
+    @apply mt-2 opacity-100;
+    grid-template-rows: 1fr;
   }
 
   .step-description {
-    @apply mt-2 block text-sm leading-relaxed text-zinc-600;
+    @apply block min-h-0 overflow-hidden text-sm leading-relaxed text-zinc-600;
   }
 
   .preview-column {
@@ -103,16 +125,20 @@ body {
     @apply sticky top-32;
   }
 
-  .laptop-frame {
-    @apply w-full;
+  .laptop-shell {
+    @apply relative mx-auto w-full max-w-[760px];
   }
 
-  .laptop-screen {
-    @apply rounded-t-2xl border border-zinc-300 bg-zinc-900 p-3;
+  .laptop-screen-window {
+    @apply absolute z-10;
+    left: 12%;
+    top: 9%;
+    width: 76%;
+    height: 66%;
   }
 
-  .laptop-base {
-    @apply mx-auto h-3 w-[86%] rounded-b-2xl border border-t-0 border-zinc-300 bg-zinc-200;
+  .laptop-overlay {
+    @apply relative z-20 block w-full h-auto;
   }
 
   .mobile-preview {
@@ -123,11 +149,15 @@ body {
     @apply relative min-h-[220px] overflow-hidden rounded-md border border-zinc-200 bg-white;
   }
 
-  .laptop-screen .image-stage {
-    @apply aspect-[16/10] min-h-0 border-zinc-700 bg-zinc-800;
+  .laptop-image-stage {
+    @apply h-full min-h-0 border-none bg-zinc-900 rounded-sm;
   }
 
   .screen-image {
     @apply absolute inset-0 h-full w-full object-cover transition-all duration-300 ease-out;
+  }
+
+  .institution-logo {
+    @apply h-12 w-12 rounded-full border border-zinc-300 bg-white object-contain p-1.5;
   }
 }
