@@ -85,4 +85,64 @@ body {
   .nav-tab {
     @apply text-xs font-normal tracking-[0.08em] text-zinc-400 transition-colors hover:text-zinc-100;
   }
+
+  .how-it-works-layout {
+    @apply grid gap-8 md:grid-cols-[2fr_3fr] md:items-start;
+  }
+
+  .step-card {
+    @apply w-full border border-zinc-800 border-l-2 border-l-transparent bg-zinc-950/35 p-4 text-left transition-all duration-300 ease-out hover:border-zinc-700 hover:bg-zinc-900/55;
+  }
+
+  .step-card-active {
+    @apply -translate-y-0.5 border-zinc-700 border-l-zinc-200 bg-zinc-900/80;
+  }
+
+  .step-number {
+    @apply mb-1 block text-xs tracking-[0.09em] text-zinc-500;
+  }
+
+  .step-title {
+    @apply block text-sm font-medium tracking-[0.01em] text-zinc-100;
+  }
+
+  .step-description {
+    @apply mt-1 block text-sm leading-relaxed text-zinc-400;
+  }
+
+  .preview-column {
+    @apply self-start;
+  }
+
+  .preview-sticky {
+    @apply sticky top-28;
+  }
+
+  .laptop-frame {
+    @apply w-full;
+  }
+
+  .laptop-screen {
+    @apply rounded-t-xl border border-zinc-700 bg-zinc-950 p-3;
+  }
+
+  .laptop-base {
+    @apply mx-auto h-3 w-[86%] rounded-b-2xl border border-t-0 border-zinc-700 bg-zinc-900;
+  }
+
+  .mobile-preview {
+    @apply mt-6;
+  }
+
+  .image-stage {
+    @apply relative min-h-[220px] overflow-hidden rounded-md border border-zinc-800 bg-black;
+  }
+
+  .laptop-screen .image-stage {
+    @apply aspect-[16/10] min-h-0;
+  }
+
+  .screen-image {
+    @apply absolute inset-0 h-full w-full object-cover transition-all duration-300 ease-out;
+  }
 }

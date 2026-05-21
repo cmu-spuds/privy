@@ -1,13 +1,49 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const navigation = ['Project', 'How It Works', 'About Us']
 
-const workflowSteps = [
-  'Product Idea',
-  'AI Capability Analysis',
-  'Privacy Risk Identification',
-  'Mitigation Strategies',
-  'Shareable Report',
+const howItWorksSteps = [
+  {
+    step: 1,
+    title: 'Product Idea Intake',
+    description:
+      'Capture the concept, target users, and intended AI behaviors to ground the privacy review.',
+    image: '/images/step1.png',
+    alt: 'Privy interface showing product idea intake form and context fields.',
+  },
+  {
+    step: 2,
+    title: 'Capability and Data Mapping',
+    description:
+      'Analyze model capabilities, data pathways, and user touchpoints that could introduce privacy risk.',
+    image: '/images/step2.png',
+    alt: 'Privy screen mapping AI capabilities and associated data flows.',
+  },
+  {
+    step: 3,
+    title: 'Privacy Risk Identification',
+    description:
+      'Generate and refine plausible privacy risks across collection, inference, retention, and sharing.',
+    image: '/images/step3.png',
+    alt: 'Privy risk identification panel listing candidate privacy concerns.',
+  },
+  {
+    step: 4,
+    title: 'Mitigation Strategy Design',
+    description:
+      'Develop concrete mitigation strategies with human review and feasibility checks.',
+    image: '/images/step4.png',
+    alt: 'Privy mitigation strategy workspace with reviewed recommendations.',
+  },
+  {
+    step: 5,
+    title: 'Shareable Assessment Report',
+    description:
+      'Compile findings into a report suitable for product, policy, and governance stakeholders.',
+    image: '/images/step5.png',
+    alt: 'Privy report export view showing summarized risks and mitigations.',
+  },
 ]
 
 const reveal = {
@@ -34,8 +70,60 @@ function RevealSection({ children, className = '', id }) {
   )
 }
 
+function fallbackImageDataUri(label) {
+  const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  return `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800">
+      <rect width="1280" height="800" fill="#0a0a0a" />
+      <rect x="30" y="30" width="1220" height="740" fill="#111111" stroke="#3f3f46" stroke-width="2" />
+      <text x="640" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" fill="#a1a1aa" letter-spacing="2">${safeLabel}</text>
+    </svg>`
+  )}`
+}
+
 function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
+  const [activeStep, setActiveStep] = useState(howItWorksSteps[0].step)
+  const [displayedStep, setDisplayedStep] = useState(howItWorksSteps[0].step)
+  const [incomingStep, setIncomingStep] = useState(null)
+  const stepTransitionTimer = useRef(null)
+
+  useEffect(() => {
+    return () => {
+      if (stepTransitionTimer.current) {
+        clearTimeout(stepTransitionTimer.current)
+      }
+    }
+  }, [])
+
+  const handleStepSelection = (stepNumber) => {
+    if (stepNumber === activeStep) {
+      return
+    }
+
+    setActiveStep(stepNumber)
+    setIncomingStep(stepNumber)
+
+    if (stepTransitionTimer.current) {
+      clearTimeout(stepTransitionTimer.current)
+    }
+
+    stepTransitionTimer.current = setTimeout(() => {
+      setDisplayedStep(stepNumber)
+      setIncomingStep(null)
+    }, 300)
+  }
+
+  const currentStep =
+    howItWorksSteps.find((step) => step.step === displayedStep) ?? howItWorksSteps[0]
+  const nextStep = incomingStep
+    ? howItWorksSteps.find((step) => step.step === incomingStep)
+    : null
+
+  const handleStepImageError = (event, label) => {
+    event.currentTarget.onerror = null
+    event.currentTarget.src = fallbackImageDataUri(label)
+  }
 
   return (
     <div className="min-h-screen bg-[#050505] text-zinc-100">
@@ -95,18 +183,13 @@ function App() {
           </div>
 
           <div className="mt-16 space-y-20 md:space-y-24">
-            <article className="section-grid">
-              <div className="placeholder-panel min-h-[300px] md:min-h-[360px]">
-                <span>Insert Research Figure</span>
-              </div>
-              <div>
-                <h3 className="subheading">Structured problem framing</h3>
-                <p className="body-copy mt-4">
-                  Teams begin by articulating the product concept, user context,
-                  and AI capabilities. Privy transforms this early description
-                  into a format that supports rigorous privacy inquiry.
-                </p>
-              </div>
+            <article className="max-w-3xl">
+              <h3 className="subheading">Structured problem framing</h3>
+              <p className="body-copy mt-4">
+                Teams begin by articulating the product concept, user context,
+                and AI capabilities. Privy transforms this early description
+                into a format that supports rigorous privacy inquiry.
+              </p>
             </article>
 
             <article className="section-grid">
@@ -131,25 +214,102 @@ function App() {
             <h2 className="section-title">Step-by-step workflow</h2>
           </div>
 
-          <div className="placeholder-panel mt-14 min-h-[190px] px-5">
-            <span>Insert Workflow Graphic</span>
-            <div className="mt-8 hidden w-full grid-cols-5 gap-2 text-center text-xs tracking-[0.06em] text-zinc-400 md:grid">
-              {workflowSteps.map((step) => (
-                <span key={step} className="border-t border-zinc-700/70 pt-3">
-                  {step}
-                </span>
-              ))}
-            </div>
-          </div>
+          <div className="how-it-works-layout mt-14">
+            <div>
+              <div role="tablist" aria-label="How Privy works" className="space-y-3">
+                {howItWorksSteps.map((stepItem) => {
+                  const isActive = stepItem.step === activeStep
+                  return (
+                    <button
+                      key={stepItem.step}
+                      id={`how-it-works-tab-${stepItem.step}`}
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls="how-it-works-preview"
+                      type="button"
+                      onClick={() => handleStepSelection(stepItem.step)}
+                      className={`step-card ${isActive ? 'step-card-active' : ''}`}
+                    >
+                      <span className="step-number">0{stepItem.step}</span>
+                      <span className="block">
+                        <span className="step-title">{stepItem.title}</span>
+                        <span className="step-description">
+                          {stepItem.description}
+                        </span>
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
 
-          <ol className="mt-10 grid gap-5 border-t border-zinc-800 pt-8 md:grid-cols-2">
-            {workflowSteps.map((step, index) => (
-              <li key={step} className="flex gap-3">
-                <span className="mt-0.5 text-xs text-zinc-500">0{index + 1}</span>
-                <span className="text-sm text-zinc-300">{step}</span>
-              </li>
-            ))}
-          </ol>
+              <div
+                id="how-it-works-preview-mobile"
+                role="tabpanel"
+                aria-labelledby={`how-it-works-tab-${activeStep}`}
+                className="mobile-preview md:hidden"
+              >
+                <div className="image-stage">
+                  <img
+                    src={currentStep.image}
+                    alt={currentStep.alt}
+                    loading="lazy"
+                    onError={(event) =>
+                      handleStepImageError(event, `Step ${currentStep.step} Preview`)
+                    }
+                    className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                  />
+                  {nextStep && (
+                    <img
+                      src={nextStep.image}
+                      alt={nextStep.alt}
+                      loading="lazy"
+                      onError={(event) =>
+                        handleStepImageError(event, `Step ${nextStep.step} Preview`)
+                      }
+                      className="screen-image absolute inset-0 opacity-100 translate-y-0"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <aside className="preview-column hidden md:block">
+              <div className="preview-sticky">
+                <div
+                  id="how-it-works-preview"
+                  role="tabpanel"
+                  aria-labelledby={`how-it-works-tab-${activeStep}`}
+                  className="laptop-frame"
+                >
+                  <div className="laptop-screen">
+                    <div className="image-stage">
+                      <img
+                        src={currentStep.image}
+                        alt={currentStep.alt}
+                        loading="lazy"
+                        onError={(event) =>
+                          handleStepImageError(event, `Step ${currentStep.step} Preview`)
+                        }
+                        className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                      />
+                      {nextStep && (
+                        <img
+                          src={nextStep.image}
+                          alt={nextStep.alt}
+                          loading="lazy"
+                          onError={(event) =>
+                            handleStepImageError(event, `Step ${nextStep.step} Preview`)
+                          }
+                          className="screen-image absolute inset-0 opacity-100 translate-y-0"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="laptop-base" aria-hidden="true" />
+                </div>
+              </div>
+            </aside>
+          </div>
         </RevealSection>
 
         <RevealSection id="about-us" className="section-spacing">
