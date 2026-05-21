@@ -80,6 +80,19 @@ function fallbackImageDataUri(label) {
   )}`
 }
 
+function fallbackFrameDataUri(label) {
+  const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  return `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760">
+      <rect width="1200" height="760" fill="#f4f4f5" />
+      <rect x="76" y="52" width="1048" height="590" rx="20" fill="none" stroke="#a1a1aa" stroke-width="18" />
+      <rect x="114" y="90" width="972" height="516" rx="8" fill="#ffffff" stroke="#d4d4d8" stroke-width="2" />
+      <rect x="260" y="658" width="680" height="28" rx="14" fill="#e4e4e7" stroke="#a1a1aa" />
+      <text x="600" y="388" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="28" fill="#71717a" letter-spacing="1">${safeLabel}</text>
+    </svg>`
+  )}`
+}
+
 function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
   const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
@@ -122,6 +135,11 @@ function App() {
   const handleStepImageError = (event, label) => {
     event.currentTarget.onerror = null
     event.currentTarget.src = fallbackImageDataUri(label)
+  }
+
+  const handleFrameImageError = (event, label) => {
+    event.currentTarget.onerror = null
+    event.currentTarget.src = fallbackFrameDataUri(label)
   }
 
   return (
@@ -200,14 +218,23 @@ function App() {
                         id={`how-it-works-tab-${step.step}`}
                         role="tab"
                         aria-selected={isActive}
+                        aria-expanded={isActive}
                         aria-controls="how-it-works-panel"
                         type="button"
                         onClick={() => handleStepSelection(step.step)}
                         className={`step-card ${isActive ? 'step-card-active' : ''}`}
                       >
-                        <span className="step-number">{step.step}</span>
-                        <span className="block">
+                        <span className="step-card-header">
+                          <span className="step-number">{String(step.step).padStart(2, '0')}</span>
                           <span className="step-title">{step.title}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`step-chevron ${isActive ? 'step-chevron-open' : ''}`}
+                          >
+                            ▾
+                          </span>
+                        </span>
+                        <span className={`step-details ${isActive ? 'step-details-open' : ''}`}>
                           <span className="step-description">{step.description}</span>
                         </span>
                       </button>
@@ -252,10 +279,10 @@ function App() {
                     id="how-it-works-panel"
                     role="tabpanel"
                     aria-labelledby={`how-it-works-tab-${activeStep}`}
-                    className="laptop-frame"
+                    className="laptop-shell"
                   >
-                    <div className="laptop-screen">
-                      <div className="image-stage">
+                    <div className="laptop-screen-window">
+                      <div className="image-stage laptop-image-stage">
                         <img
                           src={currentStep.image}
                           alt={currentStep.alt}
@@ -278,7 +305,13 @@ function App() {
                         )}
                       </div>
                     </div>
-                    <div className="laptop-base" aria-hidden="true" />
+                    <img
+                      src="/laptop-icon.png"
+                      alt=""
+                      aria-hidden="true"
+                      className="laptop-overlay"
+                      onError={(event) => handleFrameImageError(event, 'Laptop Frame')}
+                    />
                   </div>
                 </div>
               </aside>
@@ -296,20 +329,25 @@ function App() {
               <div>
                 <p className="kicker mb-3">Research</p>
                 <h2 className="section-title">The research this tool is built on</h2>
-              </div>
-              <div>
-                <p className="body-copy">
-                  Privy grew out of a research study of how AI product teams navigate privacy decisions.
-                  Through a formative study with AI practitioners, we found that most product teams lack
-                  the privacy expertise — and the structured tools — to proactively identify the risks
-                  their AI products may create or worsen.
+                <div className="mt-6 flex items-center gap-3">
+                  <img
+                    src="/spud.png"
+                    alt="SPUD Lab logo"
+                    className="institution-logo"
+                    onError={(event) => handleStepImageError(event, 'SPUD')}
+                  />
+                  <img
+                    src="/hcii.png"
+                    alt="HCII logo"
+                    className="institution-logo"
+                    onError={(event) => handleStepImageError(event, 'HCII')}
+                  />
+                </div>
+                <p className="body-copy mt-8">
+                  Privy grew out of a research study of how AI product teams navigate privacy decisions. Through a formative study with AI practitioners, we found that most product teams lack the privacy expertise—and the structured tools—to proactively identify the risks their AI products may create or worsen.
                 </p>
                 <p className="body-copy mt-5">
-                  Privy was built to close this gap: it guides practitioners through a structured privacy
-                  impact assessment, using LLM-generated suggestions to surface blind spots while keeping
-                  practitioners in control of final decisions. In an evaluation with 24 practitioners
-                  reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant
-                  risks and propose effective mitigation strategies.
+                  Privy was built to close this gap. It guides practitioners through a structured privacy impact assessment, using LLM-generated suggestions to surface blind spots while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-3">
                   <a
@@ -321,6 +359,16 @@ function App() {
                     Read Paper
                   </a>
                 </div>
+              </div>
+              <div className="md:pt-8">
+                <figure className="mx-auto max-w-[460px] overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+                  <img
+                    src="/conference.jpg"
+                    alt="Privy researchers presenting at a conference"
+                    className="w-full object-cover"
+                    onError={(event) => handleStepImageError(event, 'Conference Photo')}
+                  />
+                </figure>
               </div>
             </div>
           </div>
