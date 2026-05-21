@@ -130,14 +130,15 @@ body {
   }
 
   .laptop-shell {
-    @apply relative mx-auto w-full max-w-[860px];
+  @apply relative mx-auto w-full max-w-[860px];
+  margin-left: 2.5rem;
   }
 
   .laptop-screen-window {
     @apply absolute z-10;
     left: 50%;
-    top: 11.5%;
-    width: 72%;
+    top: 8%;
+    width: 79.5%;
     transform: translateX(-50%);
     aspect-ratio: 4 / 3;
   }

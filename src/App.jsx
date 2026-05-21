@@ -93,52 +93,82 @@ function fallbackFrameDataUri(label) {
   )}`
 }
 
+function CrossfadeImage({ src, alt, onError }) {
+  const [topSrc, setTopSrc] = useState(src)
+  const [bottomSrc, setBottomSrc] = useState(src)
+  const [fading, setFading] = useState(false)
+  const fadeTimer = useRef(null)
+
+  useEffect(() => {
+    if (src === topSrc) return
+
+    setBottomSrc(src)
+    setFading(true)
+
+    if (fadeTimer.current) clearTimeout(fadeTimer.current)
+    fadeTimer.current = setTimeout(() => {
+      setTopSrc(src)
+      setFading(false)
+    }, 350)
+
+    return () => {
+      if (fadeTimer.current) clearTimeout(fadeTimer.current)
+    }
+  }, [src])
+
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {/* bottom layer: incoming image, always visible */}
+      <img
+        src={bottomSrc}
+        alt=""
+        aria-hidden="true"
+        onError={onError}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+      />
+      {/* top layer: outgoing image, fades out */}
+      <img
+        src={topSrc}
+        alt={alt}
+        onError={onError}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          opacity: fading ? 0 : 1,
+          transition: 'opacity 350ms ease',
+        }}
+      />
+    </div>
+  )
+}
+
 function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
   const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
   const [expandedStep, setExpandedStep] = useState(workflowSteps[0].step)
-  const [displayedStep, setDisplayedStep] = useState(workflowSteps[0].step)
-  const [incomingStep, setIncomingStep] = useState(null)
-  const stepTransitionTimer = useRef(null)
-
-  useEffect(() => {
-    return () => {
-      if (stepTransitionTimer.current) {
-        clearTimeout(stepTransitionTimer.current)
-      }
-    }
-  }, [])
 
   const handleStepSelection = (stepNumber) => {
     if (stepNumber === expandedStep) {
       setExpandedStep(null)
       return
     }
-
     setExpandedStep(stepNumber)
-
-    if (stepNumber === activeStep) {
-      return
-    }
-
     setActiveStep(stepNumber)
-    setIncomingStep(stepNumber)
-
-    if (stepTransitionTimer.current) {
-      clearTimeout(stepTransitionTimer.current)
-    }
-
-    stepTransitionTimer.current = setTimeout(() => {
-      setDisplayedStep(stepNumber)
-      setIncomingStep(null)
-    }, 300)
   }
 
   const currentStep =
-    workflowSteps.find((step) => step.step === displayedStep) ?? workflowSteps[0]
-  const nextStep = incomingStep
-    ? workflowSteps.find((step) => step.step === incomingStep)
-    : null
+    workflowSteps.find((step) => step.step === activeStep) ?? workflowSteps[0]
 
   const handleStepImageError = (event, label) => {
     event.currentTarget.onerror = null
@@ -195,11 +225,14 @@ function App() {
               </div>
             </div>
             <figure className="overflow-hidden border border-zinc-200 bg-white shadow-sm">
-              <img
-                src="/privyScreenshot.png"
-                alt="Privy privacy risk assistant workflow interface"
+            <video
+                src="/demo.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full object-contain"
-              />
+            />
             </figure>
           </div>
         </RevealSection>
@@ -261,6 +294,7 @@ function App() {
                   })}
                 </div>
 
+                {/* Mobile preview */}
                 <div
                   id="how-it-works-panel-mobile"
                   role="tabpanel"
@@ -268,26 +302,11 @@ function App() {
                   className="mobile-preview md:hidden"
                 >
                   <div className="image-stage">
-                    <img
+                    <CrossfadeImage
                       src={currentStep.image}
                       alt={currentStep.alt}
-                      loading="lazy"
-                      onError={(event) =>
-                        handleStepImageError(event, `Step ${currentStep.step} Preview`)
-                      }
-                      className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                      onError={(e) => handleStepImageError(e, `Step ${currentStep.step} Preview`)}
                     />
-                    {nextStep && (
-                      <img
-                        src={nextStep.image}
-                        alt={nextStep.alt}
-                        loading="lazy"
-                        onError={(event) =>
-                          handleStepImageError(event, `Step ${nextStep.step} Preview`)
-                        }
-                        className="screen-image absolute inset-0 opacity-100 translate-y-0"
-                      />
-                    )}
                   </div>
                 </div>
               </div>
@@ -302,26 +321,11 @@ function App() {
                   >
                     <div className="laptop-screen-window">
                       <div className="image-stage laptop-image-stage">
-                        <img
+                        <CrossfadeImage
                           src={currentStep.image}
                           alt={currentStep.alt}
-                          loading="lazy"
-                          onError={(event) =>
-                            handleStepImageError(event, `Step ${currentStep.step} Preview`)
-                          }
-                          className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                          onError={(e) => handleStepImageError(e, `Step ${currentStep.step} Preview`)}
                         />
-                        {nextStep && (
-                          <img
-                            src={nextStep.image}
-                            alt={nextStep.alt}
-                            loading="lazy"
-                            onError={(event) =>
-                              handleStepImageError(event, `Step ${nextStep.step} Preview`)
-                            }
-                            className="screen-image absolute inset-0 opacity-100 translate-y-0"
-                          />
-                        )}
                       </div>
                     </div>
                     <img
@@ -379,7 +383,7 @@ function App() {
           </div>
         </RevealSection>
 
-        {/* ABOUT US — black section */}
+        {/* ABOUT US */}
         <section id="about-us" className="bg-zinc-950 text-zinc-100">
           <motion.div
             className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28"
@@ -394,7 +398,7 @@ function App() {
                 <h2 className="section-title text-zinc-100">
                   Researchers at CMU&apos;s HCII &amp; SPUD Lab
                 </h2>
-                <div className="mt-6 flex items-center gap-3">
+                <div className="mt-6 flex items-center gap-10">
                   <img
                     src="/spud.png"
                     alt="SPUD Lab logo"
