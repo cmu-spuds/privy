@@ -1,57 +1,56 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const navigation = ['Project', 'How It Works', 'About Us']
+const navigation = ['Project', 'How It Works', 'Research', 'About Us']
 
-const howItWorksSteps = [
+const workflowSteps = [
   {
     step: 1,
-    title: 'Product Idea Intake',
+    title: 'Identify Privacy Risks',
     description:
-      'Capture the concept, target users, and intended AI behaviors to ground the privacy review.',
+      'Identify privacy risks based on your product description and the user context it operates in.',
     image: '/images/step1.png',
-    alt: 'Privy interface showing product idea intake form and context fields.',
+    alt: 'Screenshot of Privy step one showing identified privacy risks.',
   },
   {
     step: 2,
-    title: 'Capability and Data Mapping',
-    description:
-      'Analyze model capabilities, data pathways, and user touchpoints that could introduce privacy risk.',
+    title: 'Rank by Priority',
+    description: 'Rank the privacy risks in priority order.',
     image: '/images/step2.png',
-    alt: 'Privy screen mapping AI capabilities and associated data flows.',
+    alt: 'Screenshot of Privy step two showing prioritized privacy risks.',
   },
   {
     step: 3,
-    title: 'Privacy Risk Identification',
+    title: 'Create Mitigation Plan',
     description:
-      'Generate and refine plausible privacy risks across collection, inference, retention, and sharing.',
+      'Brainstorm a mitigation strategy for the identified risks.',
     image: '/images/step3.png',
-    alt: 'Privy risk identification panel listing candidate privacy concerns.',
+    alt: 'Screenshot of Privy step three showing mitigation planning.',
   },
   {
     step: 4,
-    title: 'Mitigation Strategy Design',
+    title: 'Generate Summary',
     description:
-      'Develop concrete mitigation strategies with human review and feasibility checks.',
+      'Get structured summary of the ranked privacy risks and their mitigation strategies.',
     image: '/images/step4.png',
-    alt: 'Privy mitigation strategy workspace with reviewed recommendations.',
+    alt: 'Screenshot of Privy step four showing generated workflow summary.',
   },
   {
     step: 5,
-    title: 'Shareable Assessment Report',
+    title: 'Export Report',
     description:
-      'Compile findings into a report suitable for product, policy, and governance stakeholders.',
+      'Export a structured report to document decisions and share with others.',
     image: '/images/step5.png',
-    alt: 'Privy report export view showing summarized risks and mitigations.',
+    alt: 'Screenshot of Privy step five showing exported report output.',
   },
 ]
 
 const reveal = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, ease: 'easeOut' },
+    transition: { duration: 0.5, ease: 'easeOut' },
   },
 }
 
@@ -63,7 +62,7 @@ function RevealSection({ children, className = '', id }) {
       variants={reveal}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15 }}
     >
       {children}
     </motion.section>
@@ -74,17 +73,17 @@ function fallbackImageDataUri(label) {
   const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
   return `data:image/svg+xml;utf8,${encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800">
-      <rect width="1280" height="800" fill="#0a0a0a" />
-      <rect x="30" y="30" width="1220" height="740" fill="#111111" stroke="#3f3f46" stroke-width="2" />
-      <text x="640" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" fill="#a1a1aa" letter-spacing="2">${safeLabel}</text>
+      <rect width="1280" height="800" fill="#f4f4f5" />
+      <rect x="30" y="30" width="1220" height="740" fill="#ffffff" stroke="#d4d4d8" stroke-width="2" />
+      <text x="640" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" fill="#71717a" letter-spacing="2">${safeLabel}</text>
     </svg>`
   )}`
 }
 
 function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
-  const [activeStep, setActiveStep] = useState(howItWorksSteps[0].step)
-  const [displayedStep, setDisplayedStep] = useState(howItWorksSteps[0].step)
+  const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
+  const [displayedStep, setDisplayedStep] = useState(workflowSteps[0].step)
   const [incomingStep, setIncomingStep] = useState(null)
   const stepTransitionTimer = useRef(null)
 
@@ -115,9 +114,9 @@ function App() {
   }
 
   const currentStep =
-    howItWorksSteps.find((step) => step.step === displayedStep) ?? howItWorksSteps[0]
+    workflowSteps.find((step) => step.step === displayedStep) ?? workflowSteps[0]
   const nextStep = incomingStep
-    ? howItWorksSteps.find((step) => step.step === incomingStep)
+    ? workflowSteps.find((step) => step.step === incomingStep)
     : null
 
   const handleStepImageError = (event, label) => {
@@ -126,15 +125,17 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100">
-      <header className="fixed inset-x-0 top-0 z-30 border-b border-white/10 bg-black/85 backdrop-blur-[2px]">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-          <a href="#top" className="text-sm font-light tracking-[0.14em] text-zinc-100">
-            PRIVY
+    <div className="min-h-screen bg-white text-zinc-900">
+
+      {/* NAV */}
+      <header className="fixed inset-x-0 top-0 z-30 border-b border-black/10 bg-white/90 backdrop-blur-sm">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10">
+          <a href="#top">
+            <img src="/privy_logo.png" alt="Privy" className="h-10 w-auto" />
           </a>
           <nav className="flex items-center gap-6 md:gap-8">
             {navigation.map((item) => (
-              <a key={item} href={navHref(item)} className="nav-tab">
+              <a key={item} href={navHref(item)} className="nav-tab text-sm">
                 {item}
               </a>
             ))}
@@ -142,218 +143,235 @@ function App() {
         </div>
       </header>
 
-      <main id="top" className="mx-auto w-full max-w-6xl px-6 pb-24 pt-28 md:px-10 md:pt-32">
-        <RevealSection className="section-grid">
-          <div>
-            <p className="kicker">Privacy Risk Assessment Platform</p>
-            <h1 className="hero-title">
-              Privacy Risk Assessment for AI Product Teams
-            </h1>
-            <p className="body-copy mt-6 max-w-xl">
-              Privy helps teams identify, assess, and mitigate privacy risks in
-              consumer-facing AI products before deployment.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="https://arxiv.org/abs/2509.23525"
-                target="_blank"
-                rel="noreferrer"
-                className="mono-button"
-              >
-                Read Paper
-              </a>
-              <a href="#how-it-works" className="mono-button">
-                View Demo
-              </a>
-            </div>
-          </div>
-          <div className="placeholder-panel min-h-[330px] md:min-h-[420px]">
-            <span>Insert Demo Screenshot</span>
-          </div>
-        </RevealSection>
+      <main id="top">
 
-        <RevealSection id="project" className="section-spacing">
-          <div className="section-header">
-            <p className="kicker">Project</p>
-            <h2 className="section-title">What Privy Is</h2>
-            <p className="body-copy max-w-3xl">
-              Privy is a structured, research-oriented workflow for envisioning
-              and mitigating privacy risks in AI product concepts.
-            </p>
-          </div>
-
-          <div className="mt-16 space-y-20 md:space-y-24">
-            <article className="max-w-3xl">
-              <h3 className="subheading">Structured problem framing</h3>
-              <p className="body-copy mt-4">
-                Teams begin by articulating the product concept, user context,
-                and AI capabilities. Privy transforms this early description
-                into a format that supports rigorous privacy inquiry.
-              </p>
-            </article>
-
-            <article className="section-grid">
-              <div className="order-2 md:order-1">
-                <h3 className="subheading">Assessment with human oversight</h3>
-                <p className="body-copy mt-4">
-                  Privy combines LLM-generated prompts with practitioner
-                  judgment, helping teams discover non-obvious risks while
-                  preserving accountability in final decisions.
-                </p>
-              </div>
-              <div className="placeholder-panel order-1 min-h-[300px] md:order-2 md:min-h-[360px]">
-                <span>Insert Assessment Interface</span>
-              </div>
-            </article>
-          </div>
-        </RevealSection>
-
-        <RevealSection id="how-it-works" className="section-spacing">
-          <div className="section-header">
-            <p className="kicker">How It Works</p>
-            <h2 className="section-title">Step-by-step workflow</h2>
-          </div>
-
-          <div className="how-it-works-layout mt-14">
+        {/* HERO / PROJECT */}
+        <RevealSection
+          id="project"
+          className="mx-auto w-full max-w-7xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
+        >
+          <div className="grid items-center gap-12 md:grid-cols-[0.75fr_1.45fr] md:gap-14">
             <div>
-              <div role="tablist" aria-label="How Privy works" className="space-y-3">
-                {howItWorksSteps.map((stepItem) => {
-                  const isActive = stepItem.step === activeStep
-                  return (
-                    <button
-                      key={stepItem.step}
-                      id={`how-it-works-tab-${stepItem.step}`}
-                      role="tab"
-                      aria-selected={isActive}
-                      aria-controls="how-it-works-preview"
-                      type="button"
-                      onClick={() => handleStepSelection(stepItem.step)}
-                      className={`step-card ${isActive ? 'step-card-active' : ''}`}
-                    >
-                      <span className="step-number">0{stepItem.step}</span>
-                      <span className="block">
-                        <span className="step-title">{stepItem.title}</span>
-                        <span className="step-description">
-                          {stepItem.description}
-                        </span>
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
-
-              <div
-                id="how-it-works-preview-mobile"
-                role="tabpanel"
-                aria-labelledby={`how-it-works-tab-${activeStep}`}
-                className="mobile-preview md:hidden"
-              >
-                <div className="image-stage">
-                  <img
-                    src={currentStep.image}
-                    alt={currentStep.alt}
-                    loading="lazy"
-                    onError={(event) =>
-                      handleStepImageError(event, `Step ${currentStep.step} Preview`)
-                    }
-                    className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
-                  />
-                  {nextStep && (
-                    <img
-                      src={nextStep.image}
-                      alt={nextStep.alt}
-                      loading="lazy"
-                      onError={(event) =>
-                        handleStepImageError(event, `Step ${nextStep.step} Preview`)
-                      }
-                      className="screen-image absolute inset-0 opacity-100 translate-y-0"
-                    />
-                  )}
-                </div>
+              <h1 className="hero-title">
+                AI Privacy Risk Assistant
+              </h1>
+              <p className="body-copy mt-6 max-w-lg">
+                Privy helps teams identify, assess, and mitigate privacy risks
+                in consumer-facing AI products — before deployment.
+              </p>
+              <div className="mt-10">
+                <a
+                  href="mailto:haopingl@andrew.cmu.edu"
+                  className="launch-button"
+                >
+                  Contact us for access
+                </a>
               </div>
             </div>
+            <figure className="overflow-hidden border border-zinc-200 bg-white shadow-sm">
+              <img
+                src="/privyScreenshot.png"
+                alt="Privy privacy risk assistant workflow interface"
+                className="w-full object-contain"
+              />
+            </figure>
+          </div>
+        </RevealSection>
 
-            <aside className="preview-column hidden md:block">
-              <div className="preview-sticky">
+        {/* HOW IT WORKS */}
+        <RevealSection
+          id="how-it-works"
+          className="border-t border-zinc-200 bg-zinc-50"
+        >
+          <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+            <div className="mb-16">
+              <p className="kicker mb-3">How It Works</p>
+              <h2 className="section-title">A five-step workflow</h2>
+            </div>
+
+            <div className="how-it-works-layout">
+              <div>
+                <div role="tablist" aria-label="How Privy works" className="space-y-3">
+                  {workflowSteps.map((step) => {
+                    const isActive = step.step === activeStep
+                    return (
+                      <button
+                        key={step.step}
+                        id={`how-it-works-tab-${step.step}`}
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-controls="how-it-works-panel"
+                        type="button"
+                        onClick={() => handleStepSelection(step.step)}
+                        className={`step-card ${isActive ? 'step-card-active' : ''}`}
+                      >
+                        <span className="step-number">{step.step}</span>
+                        <span className="block">
+                          <span className="step-title">{step.title}</span>
+                          <span className="step-description">{step.description}</span>
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+
                 <div
-                  id="how-it-works-preview"
+                  id="how-it-works-panel-mobile"
                   role="tabpanel"
                   aria-labelledby={`how-it-works-tab-${activeStep}`}
-                  className="laptop-frame"
+                  className="mobile-preview md:hidden"
                 >
-                  <div className="laptop-screen">
-                    <div className="image-stage">
+                  <div className="image-stage">
+                    <img
+                      src={currentStep.image}
+                      alt={currentStep.alt}
+                      loading="lazy"
+                      onError={(event) =>
+                        handleStepImageError(event, `Step ${currentStep.step} Preview`)
+                      }
+                      className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                    />
+                    {nextStep && (
                       <img
-                        src={currentStep.image}
-                        alt={currentStep.alt}
+                        src={nextStep.image}
+                        alt={nextStep.alt}
                         loading="lazy"
                         onError={(event) =>
-                          handleStepImageError(event, `Step ${currentStep.step} Preview`)
+                          handleStepImageError(event, `Step ${nextStep.step} Preview`)
                         }
-                        className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                        className="screen-image absolute inset-0 opacity-100 translate-y-0"
                       />
-                      {nextStep && (
-                        <img
-                          src={nextStep.image}
-                          alt={nextStep.alt}
-                          loading="lazy"
-                          onError={(event) =>
-                            handleStepImageError(event, `Step ${nextStep.step} Preview`)
-                          }
-                          className="screen-image absolute inset-0 opacity-100 translate-y-0"
-                        />
-                      )}
-                    </div>
+                    )}
                   </div>
-                  <div className="laptop-base" aria-hidden="true" />
                 </div>
               </div>
-            </aside>
+
+              <aside className="preview-column hidden md:block">
+                <div className="preview-sticky">
+                  <div
+                    id="how-it-works-panel"
+                    role="tabpanel"
+                    aria-labelledby={`how-it-works-tab-${activeStep}`}
+                    className="laptop-frame"
+                  >
+                    <div className="laptop-screen">
+                      <div className="image-stage">
+                        <img
+                          src={currentStep.image}
+                          alt={currentStep.alt}
+                          loading="lazy"
+                          onError={(event) =>
+                            handleStepImageError(event, `Step ${currentStep.step} Preview`)
+                          }
+                          className={`screen-image ${nextStep ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'}`}
+                        />
+                        {nextStep && (
+                          <img
+                            src={nextStep.image}
+                            alt={nextStep.alt}
+                            loading="lazy"
+                            onError={(event) =>
+                              handleStepImageError(event, `Step ${nextStep.step} Preview`)
+                            }
+                            className="screen-image absolute inset-0 opacity-100 translate-y-0"
+                          />
+                        )}
+                      </div>
+                    </div>
+                    <div className="laptop-base" aria-hidden="true" />
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
         </RevealSection>
 
-        <RevealSection id="about-us" className="section-spacing">
-          <div className="section-header">
-            <p className="kicker">About Us</p>
-            <h2 className="section-title">Research team and lab context</h2>
-            <p className="body-copy max-w-3xl">
-              Privy is presented as an HCI/privacy research project aligned with
-              Carnegie Mellon University and SPUD Lab style communication:
-              clear, evidence-based, and practitioner-facing.
-            </p>
-          </div>
-
-          <div className="section-grid mt-14">
-            <div>
-              <h3 className="subheading">Academic grounding</h3>
-              <p className="body-copy mt-4">
-                The project synthesizes empirical findings from AI practitioner
-                workflows with actionable privacy design practices for
-                consumer-facing systems.
-              </p>
-              <div className="mt-10 border-t border-zinc-800 pt-6">
-                <p className="text-sm text-zinc-400">
-                  Carnegie Mellon University
+        {/* RESEARCH */}
+        <RevealSection
+          id="research"
+          className="border-t border-zinc-200"
+        >
+          <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+            <div className="grid items-start gap-12 md:grid-cols-2 md:gap-20">
+              <div>
+                <p className="kicker mb-3">Research</p>
+                <h2 className="section-title">The research this tool is built on</h2>
+              </div>
+              <div>
+                <p className="body-copy">
+                  Privy grew out of a research study of how AI product teams navigate privacy decisions.
+                  Through a formative study with AI practitioners, we found that most product teams lack
+                  the privacy expertise — and the structured tools — to proactively identify the risks
+                  their AI products may create or worsen.
                 </p>
-                <p className="mt-1 text-sm text-zinc-400">SPUD Lab</p>
+                <p className="body-copy mt-5">
+                  Privy was built to close this gap: it guides practitioners through a structured privacy
+                  impact assessment, using LLM-generated suggestions to surface blind spots while keeping
+                  practitioners in control of final decisions. In an evaluation with 24 practitioners
+                  reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant
+                  risks and propose effective mitigation strategies.
+                </p>
+                <div className="mt-10 flex flex-wrap gap-3">
+                  <a
+                    href="https://arxiv.org/abs/2509.23525"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mono-button"
+                  >
+                    Read Paper
+                  </a>
+                </div>
               </div>
             </div>
-            <div className="placeholder-panel min-h-[320px] md:min-h-[380px]">
-              <span>Insert Team / Lab Photo</span>
-            </div>
           </div>
         </RevealSection>
+
+        {/* ABOUT US — black section */}
+        <section id="about-us" className="bg-zinc-950 text-zinc-100">
+          <motion.div
+            className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28"
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+          >
+            <div className="grid items-start gap-12 md:grid-cols-2 md:gap-20">
+              <div>
+                <p className="kicker mb-3 text-zinc-500">About Us</p>
+                <h2 className="section-title text-zinc-100">
+                  Researchers at CMU's HCII &amp; SPUD Lab
+                </h2>
+              </div>
+              <div>
+                <p className="body-copy text-zinc-400">
+                  We are a research group focused on human-centered approaches
+                  to privacy and AI. Privy is part of a broader effort to give
+                  practitioners the tools they need to build responsibly.
+                </p>
+                <p className="body-copy mt-5 text-zinc-400">
+                  We collaborate with industry partners and academic institutions to study how
+                  privacy decisions are made and how they can be improved.
+                </p>
+                <div className="mt-10 border-t border-zinc-800 pt-6">
+                  <p className="text-sm tracking-wide text-zinc-500">Carnegie Mellon University</p>
+                  <p className="mt-1 text-sm tracking-wide text-zinc-500">SPUD Lab</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </section>
       </main>
 
-      <footer className="border-t border-zinc-800">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-xs tracking-[0.08em] text-zinc-500 md:flex-row md:items-center md:justify-between md:px-10">
+      {/* FOOTER */}
+      <footer className="border-t border-zinc-800 bg-zinc-950">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-xs tracking-[0.08em] text-zinc-600 md:flex-row md:items-center md:justify-between md:px-10">
           <p>Privy · Carnegie Mellon University</p>
           <div className="flex gap-5">
-            <a href="https://arxiv.org/abs/2509.23525" target="_blank" rel="noreferrer">
+            <a href="https://arxiv.org/abs/2509.23525" target="_blank" rel="noreferrer" className="hover:text-zinc-400 transition-colors">
               Paper
             </a>
-            <a href="#how-it-works">Demo</a>
-            <a href="#about-us">About</a>
+            <a href="#how-it-works" className="hover:text-zinc-400 transition-colors">How It Works</a>
+            <a href="#about-us" className="hover:text-zinc-400 transition-colors">About</a>
           </div>
         </div>
       </footer>

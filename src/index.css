@@ -1,89 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
-
 @theme {
   --font-sans: 'Inter', 'Geist', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
-
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   min-height: 100vh;
   font-family: var(--font-sans);
-  color: #f1f1f1;
-  background-color: #050505;
-  background-image: linear-gradient(to bottom, #070707 0%, #050505 42%, #040404 100%);
+  color: #111111;
+  background-color: #ffffff;
+  background-image: linear-gradient(to bottom, #fafafa 0%, #ffffff 42%, #f8f8f8 100%);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 #root {
   min-height: 100vh;
 }
-
 ::selection {
-  background: rgba(250, 250, 250, 0.24);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.12);
+  color: #000000;
 }
-
 @layer components {
   .kicker {
     @apply text-xs font-normal uppercase tracking-[0.14em] text-zinc-500;
   }
-
   .hero-title {
-    @apply mt-5 max-w-2xl text-3xl font-medium leading-tight tracking-[-0.02em] text-zinc-100 sm:text-4xl md:text-5xl;
+    @apply mt-5 max-w-2xl text-3xl font-medium leading-tight tracking-[-0.02em] text-zinc-900 sm:text-4xl md:text-5xl;
   }
-
   .section-title {
-    @apply mt-4 text-balance text-3xl font-medium tracking-[-0.02em] text-zinc-100 sm:text-4xl;
+    @apply mt-4 text-balance text-3xl font-medium tracking-[-0.02em] text-zinc-900 sm:text-4xl;
   }
-
   .subheading {
-    @apply text-2xl font-medium tracking-[-0.015em] text-zinc-100;
+    @apply text-2xl font-medium tracking-[-0.015em] text-zinc-900;
   }
-
   .body-copy {
-    @apply text-base font-normal leading-relaxed text-zinc-300;
+    @apply text-base font-normal leading-relaxed text-zinc-600;
   }
-
   .section-spacing {
-    @apply mt-28 border-t border-zinc-800 pt-20 md:mt-36 md:pt-24;
+    @apply mt-28 border-t border-zinc-200 pt-20 md:mt-36 md:pt-24;
   }
-
   .section-header {
     @apply mx-auto flex max-w-4xl flex-col items-center text-center;
   }
-
   .section-grid {
     @apply grid items-center gap-10 md:grid-cols-2 md:gap-16;
   }
-
   .placeholder-panel {
-    @apply flex items-center justify-center border border-zinc-700 bg-zinc-900/35 px-6 text-center;
+    @apply flex items-center justify-center border border-zinc-300 bg-zinc-100 px-6 text-center;
   }
-
   .placeholder-panel span {
-    @apply text-xs font-normal uppercase tracking-[0.12em] text-zinc-500;
+    @apply text-xs font-normal uppercase tracking-[0.12em] text-zinc-400;
   }
-
+  .launch-button {
+    @apply inline-block border border-zinc-900 bg-zinc-900 px-6 py-3 text-sm font-medium tracking-[0.06em] text-white transition-colors hover:bg-zinc-700 hover:border-zinc-700;
+  }
   .mono-button {
-    @apply border border-zinc-600 px-4 py-2 text-xs uppercase tracking-[0.1em] text-zinc-200 transition-colors hover:border-zinc-400 hover:text-white;
+    @apply border border-zinc-400 px-4 py-2 text-xs uppercase tracking-[0.1em] text-zinc-700 transition-colors hover:border-zinc-700 hover:text-zinc-900;
   }
-
   .nav-tab {
-    @apply text-xs font-normal tracking-[0.08em] text-zinc-400 transition-colors hover:text-zinc-100;
+    @apply text-sm font-normal tracking-[0.08em] text-zinc-500 transition-colors hover:text-zinc-900;
   }
 
   .how-it-works-layout {
@@ -91,23 +76,23 @@ body {
   }
 
   .step-card {
-    @apply w-full border border-zinc-800 border-l-2 border-l-transparent bg-zinc-950/35 p-4 text-left transition-all duration-300 ease-out hover:border-zinc-700 hover:bg-zinc-900/55;
+    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white p-5 text-left transition-all duration-300 ease-out hover:border-zinc-300 hover:bg-zinc-50;
   }
 
   .step-card-active {
-    @apply -translate-y-0.5 border-zinc-700 border-l-zinc-200 bg-zinc-900/80;
+    @apply -translate-y-0.5 border-zinc-300 border-l-zinc-900 bg-zinc-50 shadow-sm;
   }
 
   .step-number {
-    @apply mb-1 block text-xs tracking-[0.09em] text-zinc-500;
+    @apply mb-2 block text-xs font-medium tracking-[0.08em] text-zinc-400;
   }
 
   .step-title {
-    @apply block text-sm font-medium tracking-[0.01em] text-zinc-100;
+    @apply block text-base font-medium tracking-[-0.01em] text-zinc-900;
   }
 
   .step-description {
-    @apply mt-1 block text-sm leading-relaxed text-zinc-400;
+    @apply mt-2 block text-sm leading-relaxed text-zinc-600;
   }
 
   .preview-column {
@@ -115,7 +100,7 @@ body {
   }
 
   .preview-sticky {
-    @apply sticky top-28;
+    @apply sticky top-32;
   }
 
   .laptop-frame {
@@ -123,11 +108,11 @@ body {
   }
 
   .laptop-screen {
-    @apply rounded-t-xl border border-zinc-700 bg-zinc-950 p-3;
+    @apply rounded-t-2xl border border-zinc-300 bg-zinc-900 p-3;
   }
 
   .laptop-base {
-    @apply mx-auto h-3 w-[86%] rounded-b-2xl border border-t-0 border-zinc-700 bg-zinc-900;
+    @apply mx-auto h-3 w-[86%] rounded-b-2xl border border-t-0 border-zinc-300 bg-zinc-200;
   }
 
   .mobile-preview {
@@ -135,11 +120,11 @@ body {
   }
 
   .image-stage {
-    @apply relative min-h-[220px] overflow-hidden rounded-md border border-zinc-800 bg-black;
+    @apply relative min-h-[220px] overflow-hidden rounded-md border border-zinc-200 bg-white;
   }
 
   .laptop-screen .image-stage {
-    @apply aspect-[16/10] min-h-0;
+    @apply aspect-[16/10] min-h-0 border-zinc-700 bg-zinc-800;
   }
 
   .screen-image {
