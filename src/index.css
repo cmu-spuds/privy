@@ -70,4 +70,104 @@ body {
   .nav-tab {
     @apply text-sm font-normal tracking-[0.08em] text-zinc-500 transition-colors hover:text-zinc-900;
   }
+
+  .how-it-works-layout {
+    @apply grid gap-8 md:grid-cols-[2fr_3fr] md:items-start;
+  }
+
+  .step-card {
+    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white px-4 py-7 text-left transition-all duration-300 ease-out hover:border-zinc-300;
+  }
+
+  .step-card-active {
+    @apply border-zinc-300 border-l-zinc-900 bg-zinc-50 shadow-sm;
+  }
+
+  .step-card-header {
+    @apply grid grid-cols-[auto_1fr_auto] items-center gap-8;
+  }
+
+  .step-number {
+    @apply block text-[1.15rem] leading-none font-medium tracking-[0.02em] text-zinc-700;
+  }
+
+  .step-title {
+    @apply block text-base font-medium tracking-[-0.01em] text-zinc-900;
+  }
+
+  .step-chevron {
+    @apply text-zinc-600 transition-transform duration-[200ms] ease-out;
+  }
+
+  .step-chevron-icon {
+    @apply h-[1.1rem] w-[1.1rem];
+  }
+
+  .step-chevron-icon path {
+    stroke-width: 2.2;
+  }
+
+  .step-chevron-open {
+    transform: rotate(180deg);
+  }
+
+  .step-description {
+    @apply block max-h-0 min-h-0 overflow-hidden text-sm leading-relaxed text-zinc-600 opacity-0 transition-[max-height,opacity,margin] duration-[250ms] ease-out;
+    margin-top: 0;
+  }
+
+  .step-description-open {
+    @apply max-h-40 opacity-100;
+    margin-top: 1.4rem;
+  }
+
+  .preview-column {
+    @apply self-start;
+  }
+
+  .preview-sticky {
+    @apply sticky top-24;
+  }
+
+  .laptop-shell {
+  @apply relative mx-auto w-full max-w-[860px];
+  margin-left: 2.5rem;
+  }
+
+  .laptop-screen-window {
+    @apply absolute z-10;
+    left: 50%;
+    top: 8%;
+    width: 79.5%;
+    transform: translateX(-50%);
+    aspect-ratio: 4 / 3;
+  }
+
+  .laptop-overlay {
+    @apply relative z-20 block w-full h-auto;
+  }
+
+  .mobile-preview {
+    @apply mt-6;
+  }
+
+  .image-stage {
+    @apply relative min-h-[220px] overflow-hidden rounded-md border border-zinc-200 bg-white;
+  }
+
+  .laptop-image-stage {
+    @apply flex h-full min-h-0 items-center justify-center overflow-hidden rounded-sm border-none bg-zinc-900;
+  }
+
+  .screen-image {
+    @apply absolute inset-0 h-full w-full object-cover object-center transition-all duration-300 ease-out;
+  }
+
+  .institution-logo {
+    @apply h-30 w-30 rounded-full border border-zinc-300 bg-white object-contain p-1.5;
+  }
+
+  .split-section-layout {
+    @apply grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:items-center md:gap-16;
+  }
 }

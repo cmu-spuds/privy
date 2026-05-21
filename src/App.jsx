@@ -1,13 +1,48 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const navigation = ['Project', 'How It Works', 'Research', 'About Us']
 
 const workflowSteps = [
-  { num: '1', label: 'Identify Privacy Risks', desc: 'Identify privacy risks based on your product description and the user context it operates in.' },
-  { num: '2', label: 'Rank by Priority', desc: 'Rank the privacy risks in priority order.' },
-  { num: '3', label: 'Create Mitigation Plan', desc: 'Brainstorm a mitigation strategy for the identified risks.' },
-  { num: '4', label: 'Generate Summary', desc: 'Get structured summary of the ranked privacy risks and their mitigation strategies.' },
-  { num: '5', label: 'Export Report', desc: 'Export a structured report to document decisions and share with others.' },
+  {
+    step: 1,
+    title: 'Identify Privacy Risks',
+    description:
+      'Identify privacy risks based on your product description and the user context it operates in.',
+    image: '/images/step1.png',
+    alt: 'Screenshot of Privy step one showing identified privacy risks.',
+  },
+  {
+    step: 2,
+    title: 'Rank by Priority',
+    description: 'Rank the privacy risks in priority order.',
+    image: '/images/step2.png',
+    alt: 'Screenshot of Privy step two showing prioritized privacy risks.',
+  },
+  {
+    step: 3,
+    title: 'Create Mitigation Plan',
+    description:
+      'Brainstorm a mitigation strategy for the identified risks.',
+    image: '/images/step3.png',
+    alt: 'Screenshot of Privy step three showing mitigation planning.',
+  },
+  {
+    step: 4,
+    title: 'Generate Summary',
+    description:
+      'Get structured summary of the ranked privacy risks and their mitigation strategies.',
+    image: '/images/step4.png',
+    alt: 'Screenshot of Privy step four showing generated workflow summary.',
+  },
+  {
+    step: 5,
+    title: 'Export Report',
+    description:
+      'Export a structured report to document decisions and share with others.',
+    image: '/images/step5.png',
+    alt: 'Screenshot of Privy step five showing exported report output.',
+  },
 ]
 
 const reveal = {
@@ -34,8 +69,116 @@ function RevealSection({ children, className = '', id }) {
   )
 }
 
+function fallbackImageDataUri(label) {
+  const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  return `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800">
+      <rect width="1280" height="800" fill="#f4f4f5" />
+      <rect x="30" y="30" width="1220" height="740" fill="#ffffff" stroke="#d4d4d8" stroke-width="2" />
+      <text x="640" y="404" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" fill="#71717a" letter-spacing="2">${safeLabel}</text>
+    </svg>`
+  )}`
+}
+
+function fallbackFrameDataUri(label) {
+  const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  return `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760">
+      <rect width="1200" height="760" fill="#f4f4f5" />
+      <rect x="76" y="52" width="1048" height="590" rx="20" fill="none" stroke="#a1a1aa" stroke-width="18" />
+      <rect x="114" y="90" width="972" height="516" rx="8" fill="#ffffff" stroke="#d4d4d8" stroke-width="2" />
+      <rect x="260" y="658" width="680" height="28" rx="14" fill="#e4e4e7" stroke="#a1a1aa" />
+      <text x="600" y="388" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="28" fill="#71717a" letter-spacing="1">${safeLabel}</text>
+    </svg>`
+  )}`
+}
+
+function CrossfadeImage({ src, alt, onError }) {
+  const [topSrc, setTopSrc] = useState(src)
+  const [bottomSrc, setBottomSrc] = useState(src)
+  const [fading, setFading] = useState(false)
+  const fadeTimer = useRef(null)
+
+  useEffect(() => {
+    if (src === topSrc) return
+
+    setBottomSrc(src)
+    setFading(true)
+
+    if (fadeTimer.current) clearTimeout(fadeTimer.current)
+    fadeTimer.current = setTimeout(() => {
+      setTopSrc(src)
+      setFading(false)
+    }, 350)
+
+    return () => {
+      if (fadeTimer.current) clearTimeout(fadeTimer.current)
+    }
+  }, [src])
+
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {/* bottom layer: incoming image, always visible */}
+      <img
+        src={bottomSrc}
+        alt=""
+        aria-hidden="true"
+        onError={onError}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+      />
+      {/* top layer: outgoing image, fades out */}
+      <img
+        src={topSrc}
+        alt={alt}
+        onError={onError}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          opacity: fading ? 0 : 1,
+          transition: 'opacity 350ms ease',
+        }}
+      />
+    </div>
+  )
+}
+
 function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
+  const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
+  const [expandedStep, setExpandedStep] = useState(workflowSteps[0].step)
+
+  const handleStepSelection = (stepNumber) => {
+    if (stepNumber === expandedStep) {
+      setExpandedStep(null)
+      return
+    }
+    setExpandedStep(stepNumber)
+    setActiveStep(stepNumber)
+  }
+
+  const currentStep =
+    workflowSteps.find((step) => step.step === activeStep) ?? workflowSteps[0]
+
+  const handleStepImageError = (event, label) => {
+    event.currentTarget.onerror = null
+    event.currentTarget.src = fallbackImageDataUri(label)
+  }
+
+  const handleFrameImageError = (event, label) => {
+    event.currentTarget.onerror = null
+    event.currentTarget.src = fallbackFrameDataUri(label)
+  }
 
   return (
     <div className="min-h-screen bg-white text-zinc-900">
@@ -64,31 +207,32 @@ function App() {
           className="mx-auto w-full max-w-7xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
         >
           <div className="grid items-center gap-12 md:grid-cols-[0.75fr_1.45fr] md:gap-14">
-            <div>
-              <h1 className="hero-title">
+            <div className="flex flex-col items-center text-center">
+              <h1 className="hero-title mx-auto text-center">
                 AI Privacy Risk Assistant
               </h1>
-              <p className="body-copy mt-6 max-w-lg">
+              <p className="body-copy mt-6 max-w-lg text-center">
                 Privy helps teams identify, assess, and mitigate privacy risks
                 in consumer-facing AI products — before deployment.
               </p>
-              <div className="mt-10">
+              <div className="mt-10 flex justify-center">
                 <a
-                  href="https://docs.google.com/document/d/1kzmI5oTjbS_oZXcG8D6QeMQVCuF-GPBw2hKHlVB-gS0/edit?tab=t.0"
-                  target="_blank"
-                  rel="noreferrer"
+                  href="mailto:haopingl@andrew.cmu.edu"
                   className="launch-button"
                 >
-                  Launch Privy →
+                  Contact us for access
                 </a>
               </div>
             </div>
             <figure className="overflow-hidden border border-zinc-200 bg-white shadow-sm">
-              <img
-                src="/privyScreenshot.png"
-                alt="Privy privacy risk assistant workflow interface"
+            <video
+                src="/demo.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full object-contain"
-              />
+            />
             </figure>
           </div>
         </RevealSection>
@@ -98,21 +242,103 @@ function App() {
           id="how-it-works"
           className="border-t border-zinc-200 bg-zinc-50"
         >
-          <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
-            <div className="mb-16">
+          <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-20">
+            <div className="mb-8">
               <p className="kicker mb-3">How It Works</p>
               <h2 className="section-title">A five-step workflow</h2>
             </div>
 
-            <ol className="divide-y divide-zinc-200 border-t border-zinc-200">
-              {workflowSteps.map((step) => (
-                <li key={step.num} className="grid gap-4 py-8 md:grid-cols-[80px_1fr_2fr] md:gap-10 md:py-10">
-                  <span className="self-start text-3xl font-semibold leading-none tracking-tight text-zinc-300">{step.num}</span>
-                  <p className="subheading self-start">{step.label}</p>
-                  <p className="body-copy">{step.desc}</p>
-                </li>
-              ))}
-            </ol>
+            <div className="how-it-works-layout">
+              <div>
+                <div role="tablist" aria-label="How Privy works" className="space-y-3">
+                  {workflowSteps.map((step) => {
+                    const isActive = step.step === activeStep
+                    const isExpanded = step.step === expandedStep
+                    return (
+                      <button
+                        key={step.step}
+                        id={`how-it-works-tab-${step.step}`}
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-expanded={isExpanded}
+                        aria-controls="how-it-works-panel"
+                        type="button"
+                        onClick={() => handleStepSelection(step.step)}
+                        className={`step-card ${isActive ? 'step-card-active' : ''}`}
+                      >
+                        <span className="step-card-header">
+                          <span className="step-number">{step.step}</span>
+                          <span className="step-title">{step.title}</span>
+                          <span
+                            aria-hidden="true"
+                            className={`step-chevron ${isExpanded ? 'step-chevron-open' : ''}`}
+                          >
+                            <svg viewBox="0 0 16 16" className="step-chevron-icon">
+                              <path
+                                d="M3.25 5.75L8 10.25L12.75 5.75"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                        <span
+                          className={`step-description ${isExpanded ? 'step-description-open' : ''}`}
+                        >
+                          {step.description}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Mobile preview */}
+                <div
+                  id="how-it-works-panel-mobile"
+                  role="tabpanel"
+                  aria-labelledby={`how-it-works-tab-${activeStep}`}
+                  className="mobile-preview md:hidden"
+                >
+                  <div className="image-stage">
+                    <CrossfadeImage
+                      src={currentStep.image}
+                      alt={currentStep.alt}
+                      onError={(e) => handleStepImageError(e, `Step ${currentStep.step} Preview`)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <aside className="preview-column hidden md:block">
+                <div className="preview-sticky">
+                  <div
+                    id="how-it-works-panel"
+                    role="tabpanel"
+                    aria-labelledby={`how-it-works-tab-${activeStep}`}
+                    className="laptop-shell"
+                  >
+                    <div className="laptop-screen-window">
+                      <div className="image-stage laptop-image-stage">
+                        <CrossfadeImage
+                          src={currentStep.image}
+                          alt={currentStep.alt}
+                          onError={(e) => handleStepImageError(e, `Step ${currentStep.step} Preview`)}
+                        />
+                      </div>
+                    </div>
+                    <img
+                      src="/laptop-icon.png"
+                      alt=""
+                      aria-hidden="true"
+                      className="laptop-overlay"
+                      onError={(event) => handleFrameImageError(event, 'Laptop Frame')}
+                    />
+                  </div>
+                </div>
+              </aside>
+            </div>
           </div>
         </RevealSection>
 
@@ -122,31 +348,25 @@ function App() {
           className="border-t border-zinc-200"
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
-            <div className="grid items-start gap-12 md:grid-cols-2 md:gap-20">
+            <div className="split-section-layout">
               <div>
                 <p className="kicker mb-3">Research</p>
                 <h2 className="section-title">The research this tool is built on</h2>
-                <figure className="mt-8 overflow-hidden border border-zinc-200 bg-white shadow-sm">
+                <figure className="mt-8 block w-full max-w-[560px] overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
                   <img
-                    src="/privyResearchScreenshot.png"
-                    alt="Privy research privacy risk highlight summary"
-                    className="w-full object-contain"
+                    src="/conference.jpg"
+                    alt="Privy researchers presenting at a conference"
+                    className="block w-full object-cover"
+                    onError={(event) => handleStepImageError(event, 'Conference Photo')}
                   />
                 </figure>
               </div>
               <div>
                 <p className="body-copy">
-                  Privy grew out of a research study of how AI product teams navigate privacy decisions.
-                  Through a formative study with AI practitioners, we found that most product teams lack
-                  the privacy expertise — and the structured tools — to proactively identify the risks
-                  their AI products may create or worsen.
+                  Privy grew out of a research study of how AI product teams navigate privacy decisions. Through a formative study with AI practitioners, we found that most product teams lack the privacy expertise—and the structured tools—to proactively identify the risks their AI products may create or worsen.
                 </p>
                 <p className="body-copy mt-5">
-                  Privy was built to close this gap: it guides practitioners through a structured privacy
-                  impact assessment, using LLM-generated suggestions to surface blind spots while keeping
-                  practitioners in control of final decisions. In an evaluation with 24 practitioners
-                  reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant
-                  risks and propose effective mitigation strategies.
+                  Privy was built to close this gap. It guides practitioners through a structured privacy assessment, using LLM-generated suggestions to surface blind spots while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
                 </p>
                 <div className="mt-10 flex flex-wrap gap-3">
                   <a
@@ -163,7 +383,7 @@ function App() {
           </div>
         </RevealSection>
 
-        {/* ABOUT US — black section */}
+        {/* ABOUT US */}
         <section id="about-us" className="bg-zinc-950 text-zinc-100">
           <motion.div
             className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28"
@@ -172,12 +392,26 @@ function App() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.15 }}
           >
-            <div className="grid items-start gap-12 md:grid-cols-2 md:gap-20">
+            <div className="split-section-layout">
               <div>
                 <p className="kicker mb-3 text-zinc-500">About Us</p>
                 <h2 className="section-title text-zinc-100">
-                  Researchers at CMU's HCII &amp; SPUD Lab
+                  Researchers at CMU&apos;s HCII &amp; SPUD Lab
                 </h2>
+                <div className="mt-6 flex items-center gap-10">
+                  <img
+                    src="/spud.png"
+                    alt="SPUD Lab logo"
+                    className="institution-logo"
+                    onError={(event) => handleStepImageError(event, 'SPUD')}
+                  />
+                  <img
+                    src="/hcii.png"
+                    alt="HCII logo"
+                    className="institution-logo"
+                    onError={(event) => handleStepImageError(event, 'HCII')}
+                  />
+                </div>
               </div>
               <div>
                 <p className="body-copy text-zinc-400">
