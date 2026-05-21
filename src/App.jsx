@@ -177,15 +177,15 @@ function App() {
           className="mx-auto w-full max-w-7xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
         >
           <div className="grid items-center gap-12 md:grid-cols-[0.75fr_1.45fr] md:gap-14">
-            <div>
-              <h1 className="hero-title">
+            <div className="flex flex-col items-center text-center">
+              <h1 className="hero-title mx-auto text-center">
                 AI Privacy Risk Assistant
               </h1>
-              <p className="body-copy mt-6 max-w-lg">
+              <p className="body-copy mt-6 max-w-lg text-center">
                 Privy helps teams identify, assess, and mitigate privacy risks
                 in consumer-facing AI products — before deployment.
               </p>
-              <div className="mt-10">
+              <div className="mt-10 flex justify-center">
                 <a
                   href="mailto:haopingl@andrew.cmu.edu"
                   className="launch-button"
