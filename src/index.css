@@ -73,7 +73,7 @@ body {
 
   .how-it-works-layout {
     @apply grid gap-8 md:grid-cols-[2fr_3fr] md:items-start;
-    min-height: 44rem;
+    min-height: 0;
   }
 
   .step-list-column {
@@ -85,7 +85,7 @@ body {
   }
 
   .step-card {
-    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white px-4 py-3 text-left transition-all duration-300 ease-out hover:border-zinc-300;
+    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white px-4 py-7 text-left transition-all duration-300 ease-out hover:border-zinc-300;
   }
 
   .step-card-active {
@@ -93,7 +93,7 @@ body {
   }
 
   .step-card-header {
-    @apply grid grid-cols-[auto_1fr_auto] items-center gap-3;
+    @apply grid grid-cols-[auto_1fr_auto] items-center gap-8;
   }
 
   .step-number {
@@ -101,7 +101,7 @@ body {
   }
 
   .step-title {
-    @apply block text-sm font-medium tracking-[-0.01em] text-zinc-900;
+    @apply block text-base font-medium tracking-[-0.01em] text-zinc-900;
   }
 
   .step-chevron {
@@ -127,7 +127,7 @@ body {
 
   .step-description-open {
     @apply max-h-40 opacity-100;
-    margin-top: 0.5rem;
+    margin-top: 1.4rem;
   }
 
   .preview-column {
@@ -146,7 +146,7 @@ body {
     @apply absolute z-10;
     left: 14%;
     top: 12%;
-    width: 71%;
+    width: 77%;
     aspect-ratio: 4 / 3;
   }
 
@@ -171,7 +171,7 @@ body {
   }
 
   .institution-logo {
-    @apply h-12 w-12 rounded-full border border-zinc-300 bg-white object-contain p-1.5;
+    @apply h-30 w-30 rounded-full border border-zinc-300 bg-white object-contain p-1.5;
   }
 
   .split-section-layout {
