@@ -96,6 +96,7 @@ function fallbackFrameDataUri(label) {
 function App() {
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
   const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
+  const [expandedStep, setExpandedStep] = useState(workflowSteps[0].step)
   const [displayedStep, setDisplayedStep] = useState(workflowSteps[0].step)
   const [incomingStep, setIncomingStep] = useState(null)
   const stepTransitionTimer = useRef(null)
@@ -109,6 +110,13 @@ function App() {
   }, [])
 
   const handleStepSelection = (stepNumber) => {
+    if (stepNumber === expandedStep) {
+      setExpandedStep(null)
+      return
+    }
+
+    setExpandedStep(stepNumber)
+
     if (stepNumber === activeStep) {
       return
     }
@@ -212,13 +220,14 @@ function App() {
                 <div role="tablist" aria-label="How Privy works" className="space-y-3">
                   {workflowSteps.map((step) => {
                     const isActive = step.step === activeStep
+                    const isExpanded = step.step === expandedStep
                     return (
                       <button
                         key={step.step}
                         id={`how-it-works-tab-${step.step}`}
                         role="tab"
                         aria-selected={isActive}
-                        aria-expanded={isActive}
+                        aria-expanded={isExpanded}
                         aria-controls="how-it-works-panel"
                         type="button"
                         onClick={() => handleStepSelection(step.step)}
@@ -229,12 +238,20 @@ function App() {
                           <span className="step-title">{step.title}</span>
                           <span
                             aria-hidden="true"
-                            className={`step-chevron ${isActive ? 'step-chevron-open' : ''}`}
+                            className={`step-chevron ${isExpanded ? 'step-chevron-open' : ''}`}
                           >
-                            ▾
+                            <svg viewBox="0 0 16 16" className="step-chevron-icon">
+                              <path
+                                d="M3.25 5.75L8 10.25L12.75 5.75"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
                           </span>
                         </span>
-                        <span className={`step-details ${isActive ? 'step-details-open' : ''}`}>
+                        <span className={`step-details ${isExpanded ? 'step-details-open' : ''}`}>
                           <span className="step-description">{step.description}</span>
                         </span>
                       </button>
@@ -325,50 +342,32 @@ function App() {
           className="border-t border-zinc-200"
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
-            <div className="grid items-start gap-12 md:grid-cols-2 md:gap-20">
-              <div>
-                <p className="kicker mb-3">Research</p>
-                <h2 className="section-title">The research this tool is built on</h2>
-                <div className="mt-6 flex items-center gap-3">
-                  <img
-                    src="/spud.png"
-                    alt="SPUD Lab logo"
-                    className="institution-logo"
-                    onError={(event) => handleStepImageError(event, 'SPUD')}
-                  />
-                  <img
-                    src="/hcii.png"
-                    alt="HCII logo"
-                    className="institution-logo"
-                    onError={(event) => handleStepImageError(event, 'HCII')}
-                  />
-                </div>
-                <p className="body-copy mt-8">
-                  Privy grew out of a research study of how AI product teams navigate privacy decisions. Through a formative study with AI practitioners, we found that most product teams lack the privacy expertise—and the structured tools—to proactively identify the risks their AI products may create or worsen.
-                </p>
-                <p className="body-copy mt-5">
-                  Privy was built to close this gap. It guides practitioners through a structured privacy impact assessment, using LLM-generated suggestions to surface blind spots while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
-                </p>
-                <div className="mt-10 flex flex-wrap gap-3">
-                  <a
-                    href="https://arxiv.org/abs/2509.23525"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mono-button"
-                  >
-                    Read Paper
-                  </a>
-                </div>
-              </div>
-              <div className="md:pt-8">
-                <figure className="mx-auto max-w-[460px] overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-                  <img
-                    src="/conference.jpg"
-                    alt="Privy researchers presenting at a conference"
-                    className="w-full object-cover"
-                    onError={(event) => handleStepImageError(event, 'Conference Photo')}
-                  />
-                </figure>
+            <div className="max-w-4xl">
+              <p className="kicker mb-3">Research</p>
+              <h2 className="section-title">The research this tool is built on</h2>
+              <figure className="mt-8 block w-full max-w-[560px] overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+                <img
+                  src="/conference.jpg"
+                  alt="Privy researchers presenting at a conference"
+                  className="block w-full object-cover"
+                  onError={(event) => handleStepImageError(event, 'Conference Photo')}
+                />
+              </figure>
+              <p className="body-copy mt-8">
+                Privy grew out of a research study of how AI product teams navigate privacy decisions. Through a formative study with AI practitioners, we found that most product teams lack the privacy expertise—and the structured tools—to proactively identify the risks their AI products may create or worsen.
+              </p>
+              <p className="body-copy mt-5">
+                Privy was built to close this gap. It guides practitioners through a structured privacy impact assessment, using LLM-generated suggestions to surface blind spots while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <a
+                  href="https://arxiv.org/abs/2509.23525"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mono-button"
+                >
+                  Read Paper
+                </a>
               </div>
             </div>
           </div>
@@ -383,27 +382,37 @@ function App() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.15 }}
           >
-            <div className="grid items-start gap-12 md:grid-cols-2 md:gap-20">
-              <div>
-                <p className="kicker mb-3 text-zinc-500">About Us</p>
-                <h2 className="section-title text-zinc-100">
-                  Researchers at CMU's HCII &amp; SPUD Lab
-                </h2>
+            <div className="max-w-4xl">
+              <p className="kicker mb-3 text-zinc-500">About Us</p>
+              <h2 className="section-title text-zinc-100">
+                Researchers at CMU&apos;s HCII &amp; SPUD Lab
+              </h2>
+              <div className="mt-6 flex items-center gap-3">
+                <img
+                  src="/spud.png"
+                  alt="SPUD Lab logo"
+                  className="institution-logo"
+                  onError={(event) => handleStepImageError(event, 'SPUD')}
+                />
+                <img
+                  src="/hcii.png"
+                  alt="HCII logo"
+                  className="institution-logo"
+                  onError={(event) => handleStepImageError(event, 'HCII')}
+                />
               </div>
-              <div>
-                <p className="body-copy text-zinc-400">
-                  We are a research group focused on human-centered approaches
-                  to privacy and AI. Privy is part of a broader effort to give
-                  practitioners the tools they need to build responsibly.
-                </p>
-                <p className="body-copy mt-5 text-zinc-400">
-                  We collaborate with industry partners and academic institutions to study how
-                  privacy decisions are made and how they can be improved.
-                </p>
-                <div className="mt-10 border-t border-zinc-800 pt-6">
-                  <p className="text-sm tracking-wide text-zinc-500">Carnegie Mellon University</p>
-                  <p className="mt-1 text-sm tracking-wide text-zinc-500">SPUD Lab</p>
-                </div>
+              <p className="body-copy mt-8 text-zinc-400">
+                We are a research group focused on human-centered approaches
+                to privacy and AI. Privy is part of a broader effort to give
+                practitioners the tools they need to build responsibly.
+              </p>
+              <p className="body-copy mt-5 text-zinc-400">
+                We collaborate with industry partners and academic institutions to study how
+                privacy decisions are made and how they can be improved.
+              </p>
+              <div className="mt-10 border-t border-zinc-800 pt-6">
+                <p className="text-sm tracking-wide text-zinc-500">Carnegie Mellon University</p>
+                <p className="mt-1 text-sm tracking-wide text-zinc-500">SPUD Lab</p>
               </div>
             </div>
           </motion.div>

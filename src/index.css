@@ -88,7 +88,7 @@ body {
   }
 
   .step-number {
-    @apply block text-[2rem] leading-none font-medium tracking-[-0.02em] text-zinc-700;
+    @apply block text-[1.15rem] leading-none font-medium tracking-[0.02em] text-zinc-700;
   }
 
   .step-title {
@@ -96,7 +96,15 @@ body {
   }
 
   .step-chevron {
-    @apply text-xs text-zinc-500 transition-transform duration-[250ms] ease-out;
+    @apply text-zinc-600 transition-transform duration-[200ms] ease-out;
+  }
+
+  .step-chevron-icon {
+    @apply h-[1.1rem] w-[1.1rem];
+  }
+
+  .step-chevron-icon path {
+    stroke-width: 2.2;
   }
 
   .step-chevron-open {
@@ -104,13 +112,11 @@ body {
   }
 
   .step-details {
-    @apply grid overflow-hidden transition-all duration-[250ms] ease-out opacity-0;
-    grid-template-rows: 0fr;
+    @apply max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-[250ms] ease-out;
   }
 
   .step-details-open {
-    @apply mt-2 opacity-100;
-    grid-template-rows: 1fr;
+    @apply mt-2 max-h-40 opacity-100;
   }
 
   .step-description {
@@ -122,7 +128,7 @@ body {
   }
 
   .preview-sticky {
-    @apply sticky top-32;
+    @apply sticky top-24;
   }
 
   .laptop-shell {
@@ -131,10 +137,10 @@ body {
 
   .laptop-screen-window {
     @apply absolute z-10;
-    left: 12%;
-    top: 9%;
-    width: 76%;
-    height: 66%;
+    left: 14%;
+    top: 12%;
+    width: 71%;
+    aspect-ratio: 4 / 3;
   }
 
   .laptop-overlay {
