@@ -72,7 +72,7 @@ body {
   }
 
   .how-it-works-layout {
-    @apply grid gap-8 md:grid-cols-[2fr_3fr] md:items-start;
+    @apply grid gap-8 md:grid-cols-[1.2fr_3fr] md:items-start;
   }
 
   .step-card {
