@@ -9,14 +9,14 @@ const workflowSteps = [
     title: 'Identify Privacy Risks',
     description:
       'Identify privacy risks based on your product description and the user context it operates in.',
-    image: '/images/step1.png',
+    image: '/step1.png',
     alt: 'Screenshot of Privy step one showing identified privacy risks.',
   },
   {
     step: 2,
     title: 'Rank by Priority',
     description: 'Rank the privacy risks in priority order.',
-    image: '/images/step2.png',
+    image: '/step2.png',
     alt: 'Screenshot of Privy step two showing prioritized privacy risks.',
   },
   {
@@ -24,7 +24,7 @@ const workflowSteps = [
     title: 'Create Mitigation Plan',
     description:
       'Brainstorm a mitigation strategy for the identified risks.',
-    image: '/images/step3.png',
+    image: '/step3.png',
     alt: 'Screenshot of Privy step three showing mitigation planning.',
   },
   {
@@ -32,7 +32,7 @@ const workflowSteps = [
     title: 'Generate Summary',
     description:
       'Get structured summary of the ranked privacy risks and their mitigation strategies.',
-    image: '/images/step4.png',
+    image: '/step4.png',
     alt: 'Screenshot of Privy step four showing generated workflow summary.',
   },
   {
@@ -40,7 +40,7 @@ const workflowSteps = [
     title: 'Export Report',
     description:
       'Export a structured report to document decisions and share with others.',
-    image: '/images/step5.png',
+    image: '/step5.png',
     alt: 'Screenshot of Privy step five showing exported report output.',
   },
 ]
