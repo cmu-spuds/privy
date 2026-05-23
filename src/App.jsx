@@ -377,25 +377,16 @@ function App() {
           id="research"
           className="border-t border-zinc-200"
         >
-          <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28">
+          <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-9">
             <div className="split-section-layout">
               <div>
                 <p className="kicker mb-3">Research</p>
                 <h2 className="section-title">The research this tool is built on</h2>
-                <figure className="mt-8 block w-full max-w-[560px] overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-                  <img
-                    src="/conference.jpg"
-                    alt="Privy researchers presenting at a conference"
-                    className="block w-full object-cover"
-                    onError={(event) => handleStepImageError(event, 'Conference Photo')}
-                  />
-                </figure>
-              </div>
-              <div>
-                <p className="body-copy">
+                <p className="body-copy mt-6">
                   Privy guides AI product teams through a structured privacy assessment, surfacing blind spots with LLM-generated suggestions while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
                 </p>
-
+              </div>
+              <div>
                 {/* Learn More */}
                 <div className="mt-10 border-t border-zinc-200 pt-8">
                   <p className="kicker mb-5">Learn More</p>
@@ -425,7 +416,7 @@ function App() {
 
                   {/* Authors */}
                   <p className="mb-6 text-sm leading-relaxed text-zinc-600">
-                    <a href="https://hankhplee.com" target="_blank" rel="noreferrer" className="hover:text-zinc-900">Hao-Ping (Hank) Lee</a>, Yu-Ju Yang, Matthew Bilik, Isadora Krsek, Thomas Serban von Davier, Kyzyl Monteiro, Jason Lin, Shivani Agarwal, Jodi Forlizzi, and Sauvik Das
+                    <a href="https://hankhplee.com" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Hao-Ping (Hank) Lee</a>, Yu-Ju Yang, Matthew Bilik, Isadora Krsek, Thomas Serban von Davier, Kyzyl Monteiro, Jason Lin, Shivani Agarwal, Jodi Forlizzi, and Sauvik Das
                   </p>
 
                   {/* BibTeX */}
