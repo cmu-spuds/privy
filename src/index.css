@@ -170,4 +170,8 @@ body {
   .split-section-layout {
     @apply grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:items-center md:gap-16;
   }
+
+  .research-section-layout {
+    @apply md:grid-cols-2;
+  }
 }

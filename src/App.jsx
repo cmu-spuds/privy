@@ -1,48 +1,48 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const navigation = ['Project', 'How It Works', 'Research', 'About Us']
+const navigation = ['Privy', 'How Privy Works', 'Research', 'About Us']
 
 const workflowSteps = [
   {
     step: 1,
-    title: 'Identify Privacy Risks',
+    title: 'Elicit the AI capabilities and requirements',
     description:
-      'Identify privacy risks based on your product description and the user context it operates in.',
+      'Privy helps teams articulate capabilities and requirements of their AI product concepts grounded in their envisioned use cases.',
     image: '/step1.png',
     alt: 'Screenshot of Privy step one showing identified privacy risks.',
   },
   {
     step: 2,
-    title: 'Rank by Priority',
-    description: 'Rank the privacy risks in priority order.',
+    title: ' Identify and prioritize AI privacy risks',
+    description: 'Privy guides teams to envision, assess, and rank risks drawn from an AI privacy taxonomy.',
     image: '/step2.png',
     alt: 'Screenshot of Privy step two showing prioritized privacy risks.',
   },
   {
     step: 3,
-    title: 'Create Mitigation Plan',
+    title: 'Brainstorm mitigation strategies for AI privacy risks',
     description:
-      'Brainstorm a mitigation strategy for the identified risks.',
+      'Privy provides an interface that allows teams to brainstorm and integrate mitigation ideas across risks.',
     image: '/step3.png',
     alt: 'Screenshot of Privy step three showing mitigation planning.',
   },
   {
     step: 4,
-    title: 'Generate Summary',
+    title: 'Generate an AI privacy assessment to share and use',
     description:
-      'Get structured summary of the ranked privacy risks and their mitigation strategies.',
+      'Privy enables teams to easily compile and share findings about AI privacy work.',
     image: '/step4.png',
     alt: 'Screenshot of Privy step four showing generated workflow summary.',
   },
-  {
-    step: 5,
-    title: 'Export Report',
-    description:
-      'Export a structured report to document decisions and share with others.',
-    image: '/step5.png',
-    alt: 'Screenshot of Privy step five showing exported report output.',
-  },
+  // {
+  //   step: 5,
+  //   title: 'Export Report',
+  //   description:
+  //     'Export a structured report to document decisions and share with others.',
+  //   image: '/step5.png',
+  //   alt: 'Screenshot of Privy step five showing exported report output.',
+  // },
 ]
 
 const BIBTEX = `@inproceedings{lee2026privy,
@@ -131,6 +131,7 @@ function CrossfadeImage({ src, alt, onError }) {
   const [fading, setFading] = useState(false)
   const fadeTimer = useRef(null)
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (src === topSrc) return
 
@@ -146,7 +147,8 @@ function CrossfadeImage({ src, alt, onError }) {
     return () => {
       if (fadeTimer.current) clearTimeout(fadeTimer.current)
     }
-  }, [src])
+  }, [src, topSrc])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -233,17 +235,17 @@ function App() {
 
         {/* HERO / PROJECT */}
         <RevealSection
-          id="project"
+          id="privy"
           className="mx-auto w-full max-w-7xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
         >
           <div className="grid items-center gap-12 md:grid-cols-[0.75fr_1.45fr] md:gap-14">
             <div className="flex flex-col items-center text-center">
               <h1 className="hero-title mx-auto text-center">
-                AI Privacy Risk Assistant
+                Privy, an AI privacy risk assistant
               </h1>
               <p className="body-copy mt-6 max-w-lg text-center">
-                Privy helps teams identify, assess, and mitigate privacy risks
-                in consumer-facing AI products — before deployment.
+                Privy helps teams envision and mitigate privacy risks
+                for novel AI product concepts.
               </p>
               <div className="mt-10 flex justify-center">
                 <a
@@ -269,13 +271,13 @@ function App() {
 
         {/* HOW IT WORKS */}
         <RevealSection
-          id="how-it-works"
+          id="how-privy-works"
           className="border-t border-zinc-200 bg-zinc-50"
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-20">
             <div className="mb-8">
-              <p className="kicker mb-3">How It Works</p>
-              <h2 className="section-title">A five-step workflow</h2>
+              <p className="kicker mb-3">How Privy Works</p>
+              <h2 className="section-title">Key features</h2>
             </div>
 
             <div className="how-it-works-layout">
@@ -378,46 +380,55 @@ function App() {
           className="border-t border-zinc-200"
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-9">
-            <div className="split-section-layout">
+            <div className="split-section-layout research-section-layout">
               <div>
                 <p className="kicker mb-3">Research</p>
-                <h2 className="section-title">The research this tool is built on</h2>
+                <h2 className="section-title">The research behind Privy</h2>
                 <p className="body-copy mt-6">
-                  Privy guides AI product teams through a structured privacy assessment, surfacing blind spots with LLM-generated suggestions while keeping practitioners in control of final decisions. In an evaluation with 24 practitioners reviewed by 13 privacy experts, Privy consistently helped non-experts identify relevant risks and propose effective mitigation strategies. This work has been recognized with a Distinguished Paper Award at USENIX Security 2024, a Best Paper Award at CHI 2024, and an Honourable Mention at CHI 2026.
+                AI creates and exacerbates privacy risks, yet practitioners lack effective resources to identify and mitigate these risks. We present Privy, a tool that guides practitioners without privacy expertise through structured privacy impact assessments to: (i) identify relevant risks in novel AI product concepts, and (ii) propose appropriate mitigations. Privy was shaped by a formative study with 11 practitioners, which informed two versions — one LLM-powered, the other template-based. We evaluated these two versions of Privy through a between-subjects, controlled study with 24 separate practitioners, whose assessments were reviewed by 13 independent privacy experts. Results show that Privy helps practitioners produce privacy assessments that experts deemed high quality: practitioners identified relevant risks and proposed appropriate mitigation strategies. These effects were augmented in the LLM-powered version. Practitioners themselves rated Privy as being useful and usable, and their feedback illustrates how it helps overcome long-standing awareness, motivation, and ability barriers in privacy work.
                 </p>
               </div>
               <div>
                 {/* Learn More */}
-                <div className="mt-10 border-t border-zinc-200 pt-8">
-                  <p className="kicker mb-5">Learn More</p>
+                <div className="mt-10 pt-8">
+                  {/* <p className="kicker mb-5">Learn More</p> */}
 
                   {/* Paper card */}
-                  <a
-                    href="https://arxiv.org/abs/2509.23525"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group mb-6 flex items-start gap-4"
-                  >
-                    <div className="w-20 flex-shrink-0 overflow-hidden rounded border border-zinc-200 bg-zinc-50 transition-opacity group-hover:opacity-75">
+                  <div className="mb-6 flex items-start gap-4">
+                    <a
+                      href="https://dl.acm.org/doi/10.1145/3772318.3791279"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group h-52 w-40 flex-shrink-0 overflow-hidden rounded border border-zinc-200 bg-zinc-50 transition-opacity hover:opacity-75"
+                    >
                       <img
-                        src="/paper-thumbnail.png"
+                        src="/paper-thumbnail.png.pdf.png"
                         alt="Privy paper thumbnail"
-                        className="block w-full object-cover"
+                        className="block h-full w-full border border-zinc-300 object-cover"
                         onError={(e) => handleStepImageError(e, 'Paper')}
                       />
-                    </div>
+                    </a>
                     <div>
-                      <p className="text-sm font-medium leading-snug text-zinc-900 group-hover:underline">
-                        Privy: Envisioning and Mitigating Privacy Risks for Consumer-facing AI Product Concepts
-                      </p>
-                      <p className="mt-1 text-xs text-zinc-500">CHI 2026 · Honourable Mention</p>
-                    </div>
-                  </a>
+                      <a
+                        href="https://dl.acm.org/doi/10.1145/3772318.3791279"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group"
+                      >
+                        <p className="text-base font-semibold leading-snug text-zinc-900 group-hover:underline">
+                          Privy: Envisioning and Mitigating Privacy Risks for Consumer-facing AI Product Concepts
+                        </p>
+                        <p className="mt-2 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700">
+                          CHI 2026 Honourable Mention
+                        </p>
+                      </a>
 
-                  {/* Authors */}
-                  <p className="mb-6 text-sm leading-relaxed text-zinc-600">
-                    <a href="https://hankhplee.com" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Hao-Ping (Hank) Lee</a>, Yu-Ju Yang, Matthew Bilik, Isadora Krsek, Thomas Serban von Davier, Kyzyl Monteiro, Jason Lin, Shivani Agarwal, Jodi Forlizzi, and Sauvik Das
-                  </p>
+                      {/* Authors */}
+                      <p className="mt-3 text-sm leading-relaxed text-zinc-600">
+                        <a href="https://hankhplee.com" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Hao-Ping (Hank) Lee</a>, <a href="https://marisayang.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Yu-Ju Yang</a>, <a href="https://www.mattbilik.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Matthew Bilik</a>, <a href="https://www.isadorakrsek.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Isadora Krsek</a>, <a href="https://tvondavi.github.io/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Thomas Serban von Davier</a>, <a href="https://kyzyl.notion.site/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Kyzyl Monteiro</a>, <a href="https://www.linkedin.com/in/jasonlin08/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Jason Lin</a>, <a href="https://www.linkedin.com/in/shivani-agarwal-design/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Shivani Agarwal</a>, <a href="https://jodiforlizzi.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Jodi Forlizzi</a>, and <a href="http://sauvik.me/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Sauvik Das</a>
+                      </p>
+                    </div>
+                  </div>
 
                   {/* BibTeX */}
                   <div className="relative">
@@ -471,11 +482,11 @@ function App() {
                 <p className="body-copy text-zinc-400">
                   We are a research group focused on human-centered approaches
                   to privacy and AI. Privy is part of a broader effort to give
-                  practitioners the tools they need to build responsibly.
+                  practitioners the tools they need to build AI responsibly.
                 </p>
                 <p className="body-copy mt-5 text-zinc-400">
                   We collaborate with industry partners and academic institutions to study how
-                  privacy decisions are made and how they can be improved.
+                  privacy-related product decisions are made and how they can be improved.
                 </p>
                 <div className="mt-10 border-t border-zinc-800 pt-6">
                   <p className="text-sm tracking-wide text-zinc-500">Carnegie Mellon University</p>
@@ -495,7 +506,7 @@ function App() {
             <a href="https://arxiv.org/abs/2509.23525" target="_blank" rel="noreferrer" className="hover:text-zinc-400 transition-colors">
               Paper
             </a>
-            <a href="#how-it-works" className="hover:text-zinc-400 transition-colors">How It Works</a>
+            <a href="#how-it-works" className="hover:text-zinc-400 transition-colors">How Privy Works</a>
             <a href="#about-us" className="hover:text-zinc-400 transition-colors">About</a>
           </div>
         </div>
