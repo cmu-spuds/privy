@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const navigation = ['Privy', 'How Privy Works', 'Research', 'About Us']
+const navigation = ['Privy', 'How It Works', 'Research', 'About Us']
 
 const workflowSteps = [
   {
     step: 1,
     title: 'Elicit the AI capabilities and requirements',
     description:
-      'Privy helps teams articulate capabilities and requirements of their AI product concepts grounded in their envisioned use cases.',
+      'Privy helps teams articulate capabilities and requirements of their AI product concepts.',
     image: 'step1.png',
     alt: 'Screenshot of Privy step one showing identified privacy risks.',
   },

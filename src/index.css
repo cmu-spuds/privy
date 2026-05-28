@@ -130,9 +130,11 @@ body {
   }
 
   .laptop-shell {
-    @apply relative mx-auto w-full max-w-[980px];
-    margin-left: 2.5rem;
-  }
+  @apply relative mx-auto w-full max-w-[4000px];
+  margin-left: 1.4rem;
+  transform: scale(1.2);
+  transform-origin: top left;
+}
 
   .laptop-screen-window {
     @apply absolute z-10;
