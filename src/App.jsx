@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
- 
+
 const navigation = ['Privy', 'How Privy Works', 'Research', 'About Us']
- 
+
 const workflowSteps = [
   {
     step: 1,
@@ -36,7 +36,7 @@ const workflowSteps = [
     alt: 'Screenshot of Privy step four showing generated workflow summary.',
   },
 ]
- 
+
 const BIBTEX = `@inproceedings{lee2026privy,
   title     = {Privy: Envisioning and Mitigating Privacy Risks
                for Consumer-facing AI Product Concepts},
@@ -49,7 +49,7 @@ const BIBTEX = `@inproceedings{lee2026privy,
   year      = {2026},
   doi       = {10.1145/3772318.3791279}
 }`
- 
+
 const reveal = {
   hidden: { opacity: 0, y: 10 },
   visible: {
@@ -58,7 +58,7 @@ const reveal = {
     transition: { duration: 0.5, ease: 'easeOut' },
   },
 }
- 
+
 function RevealSection({ children, className = '', id }) {
   return (
     <motion.section
@@ -73,7 +73,7 @@ function RevealSection({ children, className = '', id }) {
     </motion.section>
   )
 }
- 
+
 function fallbackImageDataUri(label) {
   const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
   return `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -84,7 +84,7 @@ function fallbackImageDataUri(label) {
     </svg>`
   )}`
 }
- 
+
 function fallbackFrameDataUri(label) {
   const safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;')
   return `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -97,7 +97,7 @@ function fallbackFrameDataUri(label) {
     </svg>`
   )}`
 }
- 
+
 function CopyButton() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -116,32 +116,32 @@ function CopyButton() {
     </button>
   )
 }
- 
+
 function CrossfadeImage({ src, alt, onError }) {
   const [topSrc, setTopSrc] = useState(src)
   const [bottomSrc, setBottomSrc] = useState(src)
   const [fading, setFading] = useState(false)
   const fadeTimer = useRef(null)
- 
+
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (src === topSrc) return
- 
+
     setBottomSrc(src)
     setFading(true)
- 
+
     if (fadeTimer.current) clearTimeout(fadeTimer.current)
     fadeTimer.current = setTimeout(() => {
       setTopSrc(src)
       setFading(false)
     }, 350)
- 
+
     return () => {
       if (fadeTimer.current) clearTimeout(fadeTimer.current)
     }
   }, [src, topSrc])
   /* eslint-enable react-hooks/set-state-in-effect */
- 
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <img
@@ -176,13 +176,13 @@ function CrossfadeImage({ src, alt, onError }) {
     </div>
   )
 }
- 
+
 function App() {
   const base = import.meta.env.BASE_URL
   const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
   const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
   const [expandedStep, setExpandedStep] = useState(workflowSteps[0].step)
- 
+
   const handleStepSelection = (stepNumber) => {
     if (stepNumber === expandedStep) {
       setExpandedStep(null)
@@ -191,23 +191,23 @@ function App() {
     setExpandedStep(stepNumber)
     setActiveStep(stepNumber)
   }
- 
+
   const currentStep =
     workflowSteps.find((step) => step.step === activeStep) ?? workflowSteps[0]
- 
+
   const handleStepImageError = (event, label) => {
     event.currentTarget.onerror = null
     event.currentTarget.src = fallbackImageDataUri(label)
   }
- 
+
   const handleFrameImageError = (event, label) => {
     event.currentTarget.onerror = null
     event.currentTarget.src = fallbackFrameDataUri(label)
   }
- 
+
   return (
     <div className="min-h-screen bg-white text-zinc-900">
- 
+
       {/* NAV */}
       <header className="fixed inset-x-0 top-0 z-30 border-b border-black/10 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10">
@@ -223,24 +223,24 @@ function App() {
           </nav>
         </div>
       </header>
- 
+
       <main id="top">
- 
+
         {/* HERO / PROJECT */}
         <RevealSection
           id="privy"
           className="mx-auto w-full max-w-7xl px-6 pb-16 pt-36 md:px-10 md:pt-44"
         >
           <div className="grid items-center gap-12 md:grid-cols-[0.75fr_1.45fr] md:gap-14">
-            <div className="flex flex-col items-center text-center">
-              <h1 className="hero-title mx-auto text-center">
+            <div className="flex flex-col items-start text-left">
+              <h1 className="hero-title text-left">
                 Privy, an AI privacy risk assistant
               </h1>
-              <p className="body-copy mt-6 max-w-lg text-center">
+              <p className="body-copy mt-6 max-w-lg text-left">
                 Privy helps teams envision and mitigate privacy risks
                 for novel AI product concepts.
               </p>
-              <div className="mt-10 flex justify-center">
+              <div className="mt-10 flex justify-start">
                 <a
                   href="mailto:haopingl@andrew.cmu.edu"
                   className="launch-button"
@@ -261,7 +261,7 @@ function App() {
             </figure>
           </div>
         </RevealSection>
- 
+
         {/* HOW IT WORKS */}
         <RevealSection
           id="how-privy-works"
@@ -272,7 +272,7 @@ function App() {
               <p className="kicker mb-3">How Privy Works</p>
               <h2 className="section-title">Key features</h2>
             </div>
- 
+
             <div className="how-it-works-layout">
               <div>
                 <div role="tablist" aria-label="How Privy works" className="space-y-3">
@@ -318,7 +318,7 @@ function App() {
                     )
                   })}
                 </div>
- 
+
                 {/* Mobile preview */}
                 <div
                   id="how-it-works-panel-mobile"
@@ -335,7 +335,7 @@ function App() {
                   </div>
                 </div>
               </div>
- 
+
               <aside className="preview-column hidden md:block">
                 <div className="preview-sticky">
                   <div
@@ -366,7 +366,7 @@ function App() {
             </div>
           </div>
         </RevealSection>
- 
+
         {/* RESEARCH */}
         <RevealSection
           id="research"
@@ -384,7 +384,7 @@ function App() {
               <div>
                 {/* Learn More */}
                 <div className="mt-10 pt-8">
- 
+
                   {/* Paper card */}
                   <div className="mb-6 flex items-start gap-4">
                     <a
@@ -414,14 +414,14 @@ function App() {
                           CHI 2026 Honourable Mention
                         </p>
                       </a>
- 
+
                       {/* Authors */}
                       <p className="mt-3 text-sm leading-relaxed text-zinc-600">
                         <a href="https://hankhplee.com" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Hao-Ping (Hank) Lee</a>, <a href="https://marisayang.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Yu-Ju Yang</a>, <a href="https://www.mattbilik.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Matthew Bilik</a>, <a href="https://www.isadorakrsek.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Isadora Krsek</a>, <a href="https://tvondavi.github.io/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Thomas Serban von Davier</a>, <a href="https://kyzyl.notion.site/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Kyzyl Monteiro</a>, <a href="https://www.linkedin.com/in/jasonlin08/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Jason Lin</a>, <a href="https://www.linkedin.com/in/shivani-agarwal-design/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Shivani Agarwal</a>, <a href="https://jodiforlizzi.com/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Jodi Forlizzi</a>, and <a href="http://sauvik.me/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-zinc-900">Sauvik Das</a>
                       </p>
                     </div>
                   </div>
- 
+
                   {/* BibTeX */}
                   <div className="relative">
                     <p className="kicker mb-2">Cite</p>
@@ -435,7 +435,7 @@ function App() {
             </div>
           </div>
         </RevealSection>
- 
+
         {/* ABOUT US */}
         <section id="about-us" className="bg-zinc-950 text-zinc-100">
           <motion.div
@@ -489,7 +489,7 @@ function App() {
           </motion.div>
         </section>
       </main>
- 
+
       {/* FOOTER */}
       <footer className="border-t border-zinc-800 bg-zinc-950">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-xs tracking-[0.08em] text-zinc-600 md:flex-row md:items-center md:justify-between md:px-10">
@@ -506,5 +506,5 @@ function App() {
     </div>
   )
 }
- 
+
 export default App

@@ -62,7 +62,7 @@ body {
     @apply text-xs font-normal uppercase tracking-[0.12em] text-zinc-400;
   }
   .launch-button {
-    @apply inline-block border border-zinc-900 bg-zinc-900 px-6 py-3 text-sm font-medium tracking-[0.06em] text-white transition-colors hover:bg-zinc-700 hover:border-zinc-700;
+    @apply inline-block rounded-lg border border-zinc-900 bg-zinc-900 px-6 py-3 text-sm font-medium tracking-[0.06em] text-white transition-colors hover:bg-zinc-700 hover:border-zinc-700;
   }
   .mono-button {
     @apply border border-zinc-400 px-4 py-2 text-xs uppercase tracking-[0.1em] text-zinc-700 transition-colors hover:border-zinc-700 hover:text-zinc-900;
@@ -72,11 +72,11 @@ body {
   }
 
   .how-it-works-layout {
-    @apply grid gap-8 md:grid-cols-[1.2fr_3fr] md:items-start;
+    @apply grid gap-8 md:grid-cols-[1.2fr_3fr] md:items-stretch;
   }
 
   .step-card {
-    @apply w-full border border-zinc-200 border-l-2 border-l-transparent bg-white px-4 py-7 text-left transition-all duration-300 ease-out hover:border-zinc-300;
+    @apply w-full rounded-lg border border-zinc-200 border-l-2 border-l-transparent bg-white px-4 py-7 text-left transition-all duration-300 ease-out hover:border-zinc-300;
   }
 
   .step-card-active {
@@ -122,16 +122,16 @@ body {
   }
 
   .preview-column {
-    @apply self-start;
+    @apply self-stretch;
   }
 
   .preview-sticky {
-    @apply sticky top-24;
+    @apply sticky top-24 h-full;
   }
 
   .laptop-shell {
-  @apply relative mx-auto w-full max-w-[860px];
-  margin-left: 2.5rem;
+    @apply relative mx-auto w-full max-w-[980px];
+    margin-left: 2.5rem;
   }
 
   .laptop-screen-window {
@@ -152,7 +152,7 @@ body {
   }
 
   .image-stage {
-    @apply relative min-h-[220px] overflow-hidden rounded-md border border-zinc-200 bg-white;
+    @apply relative min-h-[220px] overflow-hidden rounded-lg border border-zinc-200 bg-white;
   }
 
   .laptop-image-stage {
