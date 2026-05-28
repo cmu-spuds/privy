@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const navigation = ['Privy', 'How It Works', 'Research', 'About Us']
+const navigation = ['Home', 'How It Works', 'Research', 'About Us']
 
 const workflowSteps = [
   {
