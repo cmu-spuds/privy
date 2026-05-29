@@ -246,10 +246,12 @@ function App() {
               </p>
               <div className="mt-10 flex justify-start">
                 <a
-                  href="mailto:haopingl@andrew.cmu.edu"
+                  href="https://forms.gle/perVmagfkR7N7gmj8"
+                  target="_blank"
+                  rel="noreferrer"
                   className="launch-button"
                 >
-                  Contact us for access
+                  Sign-up for early access
                 </a>
               </div>
             </div>
