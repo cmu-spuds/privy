@@ -6,6 +6,7 @@
 :root {
   color-scheme: light;
   scroll-behavior: smooth;
+  scroll-padding-top: 8rem;
 }
 *,
 *::before,
@@ -25,6 +26,11 @@ body {
 }
 #root {
   min-height: 100vh;
+}
+@media (min-width: 640px) {
+  :root {
+    scroll-padding-top: 6rem;
+  }
 }
 ::selection {
   background: rgba(0, 0, 0, 0.12);
@@ -72,7 +78,7 @@ body {
   }
 
   .how-it-works-layout {
-    @apply grid gap-8 md:grid-cols-[1.2fr_3fr] md:items-stretch;
+    @apply grid gap-8 lg:grid-cols-[0.9fr_2.4fr] lg:items-start lg:gap-10;
   }
 
   .step-card {
@@ -122,20 +128,16 @@ body {
   }
 
   .preview-column {
-    @apply self-stretch;
+    @apply self-start;
   }
 
   .preview-sticky {
-    @apply sticky top-24 h-full;
+    @apply sticky top-28;
   }
 
   .laptop-shell {
-    @apply relative mx-auto w-full max-w-[4000px];
-    margin-left: 1.4rem;
-    margin-top: -3rem;
-    transform: scale(1.2);
-    transform-origin: top left;
-    }
+    @apply relative mx-auto w-full max-w-[980px];
+  }
 
   .laptop-screen-window {
     @apply absolute z-10;
@@ -155,11 +157,11 @@ body {
   }
 
   .image-stage {
-    @apply relative min-h-[220px] overflow-hidden rounded-lg border border-zinc-200 bg-white;
+    @apply relative aspect-[4/3] min-h-0 overflow-hidden rounded-lg border border-zinc-200 bg-white;
   }
 
   .laptop-image-stage {
-    @apply flex h-full min-h-0 items-center justify-center overflow-hidden rounded-sm border-none bg-zinc-900;
+    @apply flex h-full min-h-0 items-center justify-center overflow-hidden rounded-sm border-none bg-white;
   }
 
   .screen-image {

@@ -159,7 +159,7 @@ function CrossfadeImage({ src, alt, onError }) {
           inset: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: 'contain',
           objectPosition: 'center',
         }}
       />
@@ -172,7 +172,7 @@ function CrossfadeImage({ src, alt, onError }) {
           inset: 0,
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: 'contain',
           objectPosition: 'center',
           opacity: fading ? 0 : 1,
           transition: 'opacity 350ms ease',
@@ -214,13 +214,13 @@ function App() {
 
       {/* NAV */}
       <header className="fixed inset-x-0 top-0 z-30 border-b border-black/10 bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 md:px-10">
-          <a href="#top">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 md:px-10">
+          <a href="#top" className="flex-shrink-0">
             <img src={`${base}privy_logo.png`} alt="Privy" className="h-10 w-auto" />
           </a>
-          <nav className="flex items-center gap-6 md:gap-8">
+          <nav className="flex w-full items-center gap-5 overflow-x-auto whitespace-nowrap pb-1 sm:w-auto sm:gap-6 sm:pb-0 md:gap-8">
             {navigation.map((item) => (
-              <a key={item.href} href={item.href} className="nav-tab text-sm">
+              <a key={item.href} href={item.href} className="nav-tab flex-shrink-0 text-xs sm:text-sm">
                 {item.label}
               </a>
             ))}
@@ -273,7 +273,7 @@ function App() {
           id="how-privy-works"
           className="border-t border-zinc-200 bg-zinc-50"
         >
-          <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-20">
+          <div className="mx-auto w-full max-w-7xl px-6 py-12 md:px-10 md:py-20">
             <div className="mb-8">
               <p className="kicker mb-3">How Privy Works</p>
               <h2 className="section-title">Key features</h2>
@@ -330,7 +330,7 @@ function App() {
                   id="how-it-works-panel-mobile"
                   role="tabpanel"
                   aria-labelledby={`how-it-works-tab-${activeStep}`}
-                  className="mobile-preview md:hidden"
+                  className="mobile-preview lg:hidden"
                 >
                   <div className="image-stage">
                     <CrossfadeImage
@@ -342,7 +342,7 @@ function App() {
                 </div>
               </div>
 
-              <aside className="preview-column hidden md:block">
+              <aside className="preview-column hidden lg:block">
                 <div className="preview-sticky">
                   <div
                     id="how-it-works-panel"
