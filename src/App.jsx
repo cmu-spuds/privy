@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const navigation = ['Home', 'How It Works', 'Research', 'About Us']
+const navigation = [
+  { label: 'Home', href: '#top' },
+  { label: 'How It Works', href: '#how-privy-works' },
+  { label: 'Research', href: '#research' },
+  { label: 'About Us', href: '#about-us' },
+]
 
 const workflowSteps = [
   {
@@ -179,7 +184,6 @@ function CrossfadeImage({ src, alt, onError }) {
 
 function App() {
   const base = import.meta.env.BASE_URL
-  const navHref = (item) => `#${item.toLowerCase().replace(/\s+/g, '-')}`
   const [activeStep, setActiveStep] = useState(workflowSteps[0].step)
   const [expandedStep, setExpandedStep] = useState(workflowSteps[0].step)
 
@@ -216,8 +220,8 @@ function App() {
           </a>
           <nav className="flex items-center gap-6 md:gap-8">
             {navigation.map((item) => (
-              <a key={item} href={navHref(item)} className="nav-tab text-sm">
-                {item}
+              <a key={item.href} href={item.href} className="nav-tab text-sm">
+                {item.label}
               </a>
             ))}
           </nav>
@@ -498,7 +502,7 @@ function App() {
             <a href="https://arxiv.org/abs/2509.23525" target="_blank" rel="noreferrer" className="hover:text-zinc-400 transition-colors">
               Paper
             </a>
-            <a href="#how-it-works" className="hover:text-zinc-400 transition-colors">How Privy Works</a>
+            <a href="#how-privy-works" className="hover:text-zinc-400 transition-colors">How Privy Works</a>
             <a href="#about-us" className="hover:text-zinc-400 transition-colors">About</a>
           </div>
         </div>
